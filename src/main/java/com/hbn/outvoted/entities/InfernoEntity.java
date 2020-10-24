@@ -64,7 +64,7 @@ public class InfernoEntity extends MonsterEntity implements IAnimatedEntity {
         super.registerAttributes();
         this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
         this.getAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK).setBaseValue(4.0D);
-        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D);
+        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50.0D);
         this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(5.0D);
         this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.23D);
         this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(5.0D);
