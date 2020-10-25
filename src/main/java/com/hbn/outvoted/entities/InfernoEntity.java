@@ -3,8 +3,8 @@ package com.hbn.outvoted.entities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
@@ -58,17 +58,15 @@ public class InfernoEntity extends MonsterEntity implements IAnimatedEntity {
         this.rotationYaw = 0.0F;
     }
 
-
     @Override
     protected void registerAttributes() {
         super.registerAttributes();
         this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
         this.getAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK).setBaseValue(4.0D);
         this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50.0D);
-        this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(5.0D);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.23D);
-        this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(5.0D);
-        this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(5.0D);
+        this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(10.0D);
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.23D);;
+        this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(48.0D);
     }
 
     @Override
@@ -203,12 +201,12 @@ public class InfernoEntity extends MonsterEntity implements IAnimatedEntity {
 
                 double d0 = this.blaze.getDistanceSq(livingentity);
                 if (d0 < 7.0D) {
-                    if (!flag) {
+                    /*if (!flag) {
                         return;
-                    }
+                    }*/
 
                     if (this.attackTime <= 0) {
-                        this.attackTime = 10;
+                        this.attackTime = 2;
                         this.blaze.attackEntityAsMob(livingentity);
                     }
 
