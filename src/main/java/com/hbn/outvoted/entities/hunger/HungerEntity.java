@@ -282,7 +282,7 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
 
         public boolean shouldExecute() {
             LivingEntity livingentity = this.hunger.getAttackTarget();
-            if (livingentity != null && livingentity.isAlive() && this.hunger.canAttack(livingentity)) {
+            if (livingentity != null && livingentity.isAlive() && this.hunger.canAttack(livingentity) && !livingentity.isInvulnerable()) {
                 return this.hunger.attacking() && !this.hunger.burrowed();
             } else {
                 this.hunger.attacking(false);
