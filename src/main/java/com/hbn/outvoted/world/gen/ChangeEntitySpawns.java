@@ -1,7 +1,7 @@
 package com.hbn.outvoted.world.gen;
 
 import com.hbn.outvoted.Outvoted;
-import com.hbn.outvoted.entities.InfernoEntity;
+import com.hbn.outvoted.entities.inferno.InfernoEntity;
 import com.hbn.outvoted.init.ModEntityTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SpawnReason;
