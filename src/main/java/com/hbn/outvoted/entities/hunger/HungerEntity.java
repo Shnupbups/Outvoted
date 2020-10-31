@@ -20,6 +20,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import software.bernie.geckolib.animation.builder.AnimationBuilder;
 import software.bernie.geckolib.animation.controller.EntityAnimationController;
 import software.bernie.geckolib.entity.IAnimatedEntity;
@@ -28,16 +29,17 @@ import software.bernie.geckolib.event.ParticleKeyFrameEvent;
 import software.bernie.geckolib.event.SoundKeyframeEvent;
 import software.bernie.geckolib.manager.EntityAnimationManager;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
     private static final DataParameter<Boolean> BURROWED = EntityDataManager.createKey(HungerEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(HungerEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> ENCHANTING = EntityDataManager.createKey(HungerEntity.class, DataSerializers.BOOLEAN);
-    private Map<Enchantment, Integer> storedEnchants = new HashMap<Enchantment, Integer>();
+    private static final DataParameter<Integer> VARIANT = EntityDataManager.createKey(HungerEntity.class, DataSerializers.VARINT);
+    private Map<Enchantment, Integer> storedEnchants = new ConcurrentHashMap<Enchantment, Integer>();
 
     EntityAnimationManager manager = new EntityAnimationManager();
     EntityAnimationController controller = new EntityAnimationController(this, "controller", 2, this::animationPredicate);
@@ -149,6 +151,7 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
         this.dataManager.register(BURROWED, Boolean.FALSE);
         this.dataManager.register(ATTACKING, Boolean.FALSE);
         this.dataManager.register(ENCHANTING, Boolean.FALSE);
+        this.dataManager.register(VARIANT, 2);
     }
 
     public void burrowed(boolean burrowed) {
@@ -175,6 +178,13 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
         return this.dataManager.get(ENCHANTING);
     }
 
+    public int variant() {
+        if (this.dataManager.get(VARIANT) == 2) {
+            this.dataManager.set(VARIANT, this.world.getBiome(new BlockPos(this.getPosX(), this.getPosY(), this.getPosZ())).getCategory() == Biome.Category.DESERT ? 0 : 1);
+        }
+        return this.dataManager.get(VARIANT);
+    }
+
     public ItemStack modifyEnchantments(ItemStack stack, int damage, int count) {
         ItemStack itemstack = stack.copy();
         itemstack.removeChildTag("Enchantments");
@@ -191,7 +201,7 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
             //return true;
         }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        if (!map.equals(new HashMap<Enchantment, Integer>())) {
+        if (!map.isEmpty()) {
             for (Map.Entry<Enchantment, Integer> entry : map.entrySet()) {
                 Enchantment key = entry.getKey();
                 Integer value = entry.getValue();
@@ -216,7 +226,7 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
                         for (Enchantment ench : storedEnchants.keySet()) {
                             if (ench instanceof ProtectionEnchantment) {
                                 if (key instanceof ProtectionEnchantment) {
-                                    if (!storedEnchants.equals(new HashMap<Enchantment, Integer>())) {
+                                    if (!storedEnchants.isEmpty()) {
                                         if (key.isCompatibleWith(ench)) {
                                             storedEnchants.put(key, value);
                                         } else {
@@ -239,15 +249,15 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
                             }
                         }
                     } else {
-                        System.out.println(storedEnchants);
                         storedEnchants.put(key, value);
+                        itemstack = ItemStack.EMPTY;
                     }
                 }
                 //map = new HashMap<Enchantment, Integer>();
             }
         } else {
             map = storedEnchants;
-            storedEnchants = new HashMap<Enchantment, Integer>();
+            storedEnchants = new ConcurrentHashMap<Enchantment, Integer>();
         }
 
         /*if (map.equals(new HashMap<Enchantment, Integer>())) {
@@ -283,20 +293,13 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
     }
 
     /**
-     * Called to update the entity's position/logic.
-     */
-    /*public void tick() {
-        super.tick();
-    }*/
-
-    /**
      * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
      * use this to react to sunlight and start to burn.
      */
     public void livingTick() {
         if (this.isAlive()) {
-            this.setInvulnerable(burrowed());
-            this.setSilent(burrowed());
+            this.setInvulnerable(this.burrowed());
+            this.setSilent(this.burrowed());
         }
 
         super.livingTick();
@@ -440,14 +443,11 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
                                             this.hunger.world.playSound(null, this.hunger.getPosX(), this.hunger.getPosY(), this.hunger.getPosZ(), SoundEvents.ENTITY_GENERIC_EAT, this.hunger.getSoundCategory(), 0.8F, 0.9F);
                                             entity.remove();
                                             this.hunger.enchanting(true);
-                                        } else {
-                                            this.hunger.enchanting(false);
                                         }
                                         this.hunger.burrowed(suitable);
                                     }
                                 } else {
                                     this.hunger.burrowed(suitable);
-                                    this.hunger.enchanting(false);
                                 }
                             } else if (entity instanceof LivingEntity && !this.hunger.enchanting()) {
                                 if (entity.isAlive() && this.hunger.canAttack((LivingEntity) entity)) {
@@ -462,7 +462,6 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
                             }
                         } else {
                             this.hunger.burrowed(suitable);
-                            this.hunger.enchanting(false);
                         }
                     }
                 }
