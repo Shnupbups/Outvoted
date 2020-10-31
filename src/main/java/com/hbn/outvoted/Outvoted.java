@@ -2,6 +2,7 @@ package com.hbn.outvoted;
 
 import com.hbn.outvoted.init.ModEntityTypes;
 import com.hbn.outvoted.init.ModItems;
+import com.hbn.outvoted.util.ServerEvents;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -20,6 +21,8 @@ public class Outvoted {
 
         ModItems.ITEMS.register(modEventBus);
         ModEntityTypes.ENTITY_TYPES.register(modEventBus);
+
+        MinecraftForge.EVENT_BUS.register(new ServerEvents());
 
         MinecraftForge.EVENT_BUS.register(this);
     }

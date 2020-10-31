@@ -1,16 +1,10 @@
 package com.hbn.outvoted.world.gen;
 
 import com.hbn.outvoted.Outvoted;
-import com.hbn.outvoted.entities.inferno.InfernoEntity;
 import com.hbn.outvoted.init.ModEntityTypes;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.monster.BlazeEntity;
-import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;

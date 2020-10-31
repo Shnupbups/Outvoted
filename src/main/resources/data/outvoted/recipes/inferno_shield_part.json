@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "MMM",
+    "MCM",
+    "MMM"
+  ],
+  "key": {
+    "C": {
+      "item": "outvoted:inferno_piece"
+    },
+    "M": {
+      "item": "minecraft:nether_bricks"
+    }
+  },
+  "result": {
+    "item": "outvoted:inferno_shield_part"
+  }
+}
