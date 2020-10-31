@@ -22,6 +22,9 @@ public class ModEntitySpawns {
             } else if (biome.getCategory() == Biome.Category.DESERT) {
                 biome.getSpawns(EntityClassification.CREATURE)
                         .add(new Biome.SpawnListEntry(ModEntityTypes.HUNGER.get(), 90, 0, 1));
+            } else if (biome.getCategory() == Biome.Category.PLAINS || biome.getCategory() == Biome.Category.FOREST) {
+                biome.getSpawns(EntityClassification.CREATURE)
+                        .add(new Biome.SpawnListEntry(ModEntityTypes.HUNGER.get(), 70, 0, 1));
             }
         }
     }
