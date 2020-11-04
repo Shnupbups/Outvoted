@@ -6,7 +6,7 @@
   "overrides": [
     {
       "predicate": {
-        "blocking": 1
+        "outvoted:blocking": 1
       },
       "model": "outvoted:item/inferno_shield_blocking"
     }
