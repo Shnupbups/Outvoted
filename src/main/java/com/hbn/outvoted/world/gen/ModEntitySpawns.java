@@ -18,7 +18,7 @@ public class ModEntitySpawns {
     public static void spawnEntities(FMLLoadCompleteEvent event) {
         for (Biome biome : ForgeRegistries.BIOMES) {
             if (OutvotedConfig.COMMON.spawninferno.get()) {
-                if (biome.getDisplayName().getString().equals("Nether Wastes")) {
+                if (biome.getCategory() == Biome.Category.NETHER) {
                     biome.getSpawns(EntityClassification.MONSTER)
                             .add(new Biome.SpawnListEntry(EntityType.BLAZE, 10, 5, 7));
                 }
@@ -30,6 +30,12 @@ public class ModEntitySpawns {
                 } else if (biome.getCategory() == Biome.Category.PLAINS || biome.getCategory() == Biome.Category.FOREST) {
                     biome.getSpawns(EntityClassification.CREATURE)
                             .add(new Biome.SpawnListEntry(ModEntityTypes.HUNGER.get(), 70, 0, 1));
+                }
+            }
+            if (OutvotedConfig.COMMON.spawnkraken.get()) {
+                if (biome.getCategory() == Biome.Category.OCEAN) {
+                    biome.getSpawns(EntityClassification.MONSTER)
+                            .add(new Biome.SpawnListEntry(ModEntityTypes.KRAKEN.get(), 1, 0, 1));
                 }
             }
         }
