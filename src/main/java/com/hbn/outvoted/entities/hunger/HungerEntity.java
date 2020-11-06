@@ -113,6 +113,7 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
         this.experienceValue = 5;
     }
 
+
     @Override
     protected void registerAttributes() {
         super.registerAttributes();

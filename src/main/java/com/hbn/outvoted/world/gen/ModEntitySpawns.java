@@ -32,6 +32,12 @@ public class ModEntitySpawns {
                             .add(new Biome.SpawnListEntry(ModEntityTypes.HUNGER.get(), 70, 0, 1));
                 }
             }
+            if (OutvotedConfig.COMMON.spawnkraken.get()) {
+                if (biome.getCategory() == Biome.Category.OCEAN) {
+                    biome.getSpawns(EntityClassification.MONSTER)
+                            .add(new Biome.SpawnListEntry(ModEntityTypes.KRAKEN.get(), 1, 0, 1));
+                }
+            }
         }
     }
 }
