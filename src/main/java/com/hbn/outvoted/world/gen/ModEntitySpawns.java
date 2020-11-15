@@ -17,25 +17,23 @@ public class ModEntitySpawns {
     @SubscribeEvent
     public static void spawnEntities(FMLLoadCompleteEvent event) {
         for (Biome biome : ForgeRegistries.BIOMES) {
+            String biomename = biome.getRegistryName().toString();
             if (OutvotedConfig.COMMON.spawninferno.get()) {
                 if (biome.getCategory() == Biome.Category.NETHER) {
                     biome.getSpawns(EntityClassification.MONSTER)
-                            .add(new Biome.SpawnListEntry(EntityType.BLAZE, 10, 5, 7));
+                            .add(new Biome.SpawnListEntry(EntityType.BLAZE, OutvotedConfig.COMMON.rateblaze.get(), 3, 4));
                 }
             }
             if (OutvotedConfig.COMMON.spawnhunger.get()) {
-                if (biome.getCategory() == Biome.Category.DESERT) {
+                if (biome.getCategory() == Biome.Category.DESERT || biome.getCategory() == Biome.Category.SWAMP) {
                     biome.getSpawns(EntityClassification.CREATURE)
-                            .add(new Biome.SpawnListEntry(ModEntityTypes.HUNGER.get(), 90, 0, 1));
-                } else if (biome.getCategory() == Biome.Category.PLAINS || biome.getCategory() == Biome.Category.FOREST) {
-                    biome.getSpawns(EntityClassification.CREATURE)
-                            .add(new Biome.SpawnListEntry(ModEntityTypes.HUNGER.get(), 70, 0, 1));
+                            .add(new Biome.SpawnListEntry(ModEntityTypes.HUNGER.get(), OutvotedConfig.COMMON.ratehunger.get(), 2, 3));
                 }
             }
             if (OutvotedConfig.COMMON.spawnkraken.get()) {
-                if (biome.getCategory() == Biome.Category.OCEAN) {
-                    biome.getSpawns(EntityClassification.MONSTER)
-                            .add(new Biome.SpawnListEntry(ModEntityTypes.KRAKEN.get(), 1, 0, 1));
+                if (biomename.equals("minecraft:deep_ocean") || biomename.equals("minecraft:deep_warm_ocean") || biomename.equals("minecraft:deep_lukewarm_ocean") || biomename.equals("minecraft:deep_cold_ocean")) {
+                    biome.getSpawns(EntityClassification.WATER_CREATURE)
+                            .add(new Biome.SpawnListEntry(ModEntityTypes.KRAKEN.get(), OutvotedConfig.COMMON.ratekraken.get(), 1, 1));
                 }
             }
         }

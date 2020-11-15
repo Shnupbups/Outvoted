@@ -46,7 +46,6 @@ public class InfernoHelmetModel<T extends LivingEntity> extends BipedModel<T> {
 
     @Override
     protected Iterable<ModelRenderer> getHeadParts() {
-        // TODO SUPER HACKY FIX UNTIL FORGE CAN FIX setRotationAngles
         float offset = this.bipedHead.rotationPointY;
 
         this.head.copyModelAngles(this.bipedHead);

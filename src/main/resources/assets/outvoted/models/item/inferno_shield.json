@@ -1,7 +1,7 @@
 {
   "parent": "item/shield",
   "textures": {
-    "particle": "block/nether_bricks"
+    "particle": "block/polished_blackstone"
   },
   "overrides": [
     {
