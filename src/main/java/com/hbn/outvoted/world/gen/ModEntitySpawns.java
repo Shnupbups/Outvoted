@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@Mod.EventBusSubscriber(modid = Outvoted.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Outvoted.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModEntitySpawns {
 
     @SubscribeEvent
@@ -20,25 +20,24 @@ public class ModEntitySpawns {
             if (OutvotedConfig.COMMON.spawninferno.get()) {
                 if (biome.getCategory() == Biome.Category.NETHER) {
                     biome.getSpawns(EntityClassification.MONSTER)
-                            .add(new Biome.SpawnListEntry(EntityType.BLAZE, 10, 5, 7));
+                            .add(new Biome.SpawnListEntry(EntityType.BLAZE, 10, 3, 5));
                 }
             }
             if (OutvotedConfig.COMMON.spawnhunger.get()) {
                 if (biome.getCategory() == Biome.Category.DESERT) {
                     biome.getSpawns(EntityClassification.CREATURE)
-                            .add(new Biome.SpawnListEntry(ModEntityTypes.HUNGER.get(), 90, 0, 1));
-                } else if (biome.getCategory() == Biome.Category.PLAINS || biome.getCategory() == Biome.Category.FOREST) {
+                            .add(new Biome.SpawnListEntry(ModEntityTypes.HUNGER.get(), 90, 1, 2));
+                } else if (biome.getCategory() == Biome.Category.SWAMP) {
                     biome.getSpawns(EntityClassification.CREATURE)
-                            .add(new Biome.SpawnListEntry(ModEntityTypes.HUNGER.get(), 70, 0, 1));
+                            .add(new Biome.SpawnListEntry(ModEntityTypes.HUNGER.get(), 70, 1, 2));
                 }
             }
             if (OutvotedConfig.COMMON.spawnkraken.get()) {
                 if (biome.getCategory() == Biome.Category.OCEAN) {
-                    biome.getSpawns(EntityClassification.MONSTER)
-                            .add(new Biome.SpawnListEntry(ModEntityTypes.KRAKEN.get(), 1, 0, 1));
+                    biome.getSpawns(EntityClassification.WATER_CREATURE)
+                            .add(new Biome.SpawnListEntry(ModEntityTypes.KRAKEN.get(), 10, 1, 1));
                 }
             }
         }
     }
 }
-

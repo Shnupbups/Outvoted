@@ -25,6 +25,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import software.bernie.geckolib.animation.builder.AnimationBuilder;
@@ -201,7 +202,7 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
         } else {
             itemstack.removeChildTag("Damage");
         }
-        if (storedEnchants.size() < OutvotedConfig.COMMON.max_enchants.get()) {
+        if (storedEnchants.size() <= OutvotedConfig.COMMON.max_enchants.get()) {
             itemstack.setCount(count);
             Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(stack).entrySet().stream().filter((p_217012_0_) -> {
                 return !p_217012_0_.getKey().isCurse();
@@ -222,11 +223,19 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
                             }
                             if (isMax) {
                                 storedEnchants.put(key, key.getMaxLevel() + 1);
+                                itemstack = ItemStack.EMPTY;
                             } else {
                                 itemstack = null;
                             }
-                        } else {
+                        } else if (value == storedEnchants.get(key)) {
+                            storedEnchants.put(key, value + 1);
+                        } else if (value > storedEnchants.get(key)) {
                             storedEnchants.put(key, value);
+                        } else {
+                            itemstack = null;
+                        }
+                        if (itemstack != null) {
+                            itemstack = ItemStack.EMPTY;
                         }
                     } else {
                         if (storedEnchants.size() > 0) {
@@ -236,7 +245,7 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
                                         if (!storedEnchants.isEmpty()) {
                                             if (key.isCompatibleWith(ench)) {
                                                 storedEnchants.put(key, value);
-                                            } else {
+                                            } else if (key != ench) {
                                                 itemstack = null;
                                                 break;
                                             }
@@ -250,9 +259,11 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
                                     storedEnchants.put(key, value);
                                 } else if (key instanceof InfinityEnchantment || key instanceof MendingEnchantment) {
                                     storedEnchants.put(key, value);
-                                } else {
+                                } else if (key != ench) {
                                     itemstack = null;
                                     break;
+                                } else {
+                                    itemstack = ItemStack.EMPTY;
                                 }
                             }
                         } else {
@@ -267,13 +278,6 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
                 storedEnchants = new ConcurrentHashMap<Enchantment, Integer>();
             }
 
-        /*if (map.equals(new HashMap<Enchantment, Integer>())) {
-            if (Math.random() > 0.5) {
-                EnchantmentHelper.addRandomEnchantment(new Random(), itemstack, 10, true);
-            } else {
-                itemstack = ItemStack.EMPTY;
-            }
-        }*/
             if (itemstack != null) {
                 if (itemstack.getItem() == Items.ENCHANTED_BOOK) {
                     itemstack = ItemStack.EMPTY;
@@ -315,9 +319,8 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
         super.livingTick();
     }
 
-    @Override
     public boolean canBePushed() {
-        return this.isInvulnerable() && super.canBePushed();
+        return !this.isInvulnerable() && super.canBePushed();
     }
 
     static class BiteGoal extends MeleeAttackGoal {
@@ -331,7 +334,7 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
         public boolean shouldExecute() {
             boolean exec = super.shouldExecute();
             LivingEntity livingentity = this.hunger.getAttackTarget();
-            if (livingentity != null && livingentity.isAlive() && this.hunger.canAttack(livingentity)) {
+            if (livingentity != null && livingentity.isAlive() && this.hunger.canAttack(livingentity) && this.hunger.world.getDifficulty() != Difficulty.PEACEFUL) {
                 this.hunger.attacking(!this.hunger.enchanting() && !this.hunger.burrowed());
                 return !this.hunger.enchanting() && !this.hunger.burrowed() && exec;
             } else {
@@ -348,15 +351,20 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
         double posZ = entityIn.getPosZ();
         boolean ret = true;
         for (double k = posX - 1; k <= posX + 1; ++k) {
-            for (double l = posZ - 1; l <= posZ + 1; ++l) {
-                BlockState block = world.getBlockState(new BlockPos(k, posY - 1, l));
-                if (block.isIn(BlockTags.BAMBOO_PLANTABLE_ON)) {
-                    if (ret) {
-                        ret = !entityIn.getLeashed();
+            if (ret) {
+                for (double l = posZ - 1; l <= posZ + 1; ++l) {
+                    BlockState block = world.getBlockState(new BlockPos(k, posY - 1, l));
+                    if (block.isIn(BlockTags.BAMBOO_PLANTABLE_ON) && !entityIn.isInWater()) {
+                        if (ret) {
+                            ret = !entityIn.getLeashed();
+                        }
+                    } else {
+                        ret = false;
+                        break;
                     }
-                } else {
-                    ret = false;
                 }
+            } else {
+                break;
             }
         }
         return ret;
@@ -442,7 +450,7 @@ public class HungerEntity extends CreatureEntity implements IAnimatedEntity {
                 if (!entities.isEmpty()) {
                     for (Entity entity : entities) {
                         double d0 = this.hunger.getDistanceSq(entity);
-                        if (d0 < 1.1D) {
+                        if (d0 < 1.2D) {
                             if (entity instanceof ItemEntity) {
                                 ItemStack item = ((ItemEntity) entity).getItem();
                                 if (item.getTag() != null) {

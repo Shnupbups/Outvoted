@@ -1,6 +1,7 @@
 package com.hbn.outvoted.world.gen;
 
 import com.hbn.outvoted.Outvoted;
+import com.hbn.outvoted.config.OutvotedConfig;
 import com.hbn.outvoted.entities.inferno.InfernoEntity;
 import com.hbn.outvoted.init.ModEntityTypes;
 import net.minecraft.entity.Entity;
@@ -14,26 +15,28 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Outvoted.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ChangeEntitySpawns {
     @SubscribeEvent
-    public static void changeInferno(LivingSpawnEvent.SpecialSpawn event) {
+    public static void changeMobs(LivingSpawnEvent.SpecialSpawn event) {
         Entity e = event.getEntity();
-        if (e instanceof BlazeEntity) {
-            if (event.getSpawnReason() == SpawnReason.NATURAL) {
-                if (Math.random() > 0.8) {
-                    World world = event.getEntity().getEntityWorld();
+        if (OutvotedConfig.COMMON.spawninferno.get()) {
+            if (e instanceof BlazeEntity) {
+                if (event.getSpawnReason() == SpawnReason.NATURAL) {
+                    if (Math.random() > 0.8) {
+                        World world = event.getEntity().getEntityWorld();
 
-                    InfernoEntity inferno = ModEntityTypes.INFERNO.get().create(world);
-                    inferno.setPositionAndRotation(e.getPosX(), e.getPosY(), e.getPosZ(), e.rotationYaw, e.rotationPitch);
+                        InfernoEntity inferno = ModEntityTypes.INFERNO.get().create(world);
+                        inferno.setPositionAndRotation(e.getPosXRandom(1.0D), e.getPosY(), e.getPosZRandom(2.0D), e.rotationYaw, e.rotationPitch);
 
-                    world.addEntity(inferno);
-                }
-            } else if (event.getSpawnReason() == SpawnReason.SPAWNER) {
-                if (Math.random() > 0.9) {
-                    World world = event.getEntity().getEntityWorld();
+                        world.addEntity(inferno);
+                    }
+                } else if (event.getSpawnReason() == SpawnReason.SPAWNER) {
+                    if (Math.random() > 0.9) {
+                        World world = event.getEntity().getEntityWorld();
 
-                    InfernoEntity inferno = ModEntityTypes.INFERNO.get().create(world);
-                    inferno.setPositionAndRotation(e.getPosXRandom(1.0D), e.getPosY(), e.getPosZRandom(2.0D), e.rotationYaw, e.rotationPitch);
+                        InfernoEntity inferno = ModEntityTypes.INFERNO.get().create(world);
+                        inferno.setPositionAndRotation(e.getPosXRandom(1.0D), e.getPosY(), e.getPosZRandom(2.0D), e.rotationYaw, e.rotationPitch);
 
-                    world.addEntity(inferno);
+                        world.addEntity(inferno);
+                    }
                 }
             }
         }

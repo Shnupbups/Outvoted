@@ -31,7 +31,7 @@ public class InfernoShieldModel {
     private static void addShieldPropertyOverrides(ResourceLocation override, IItemPropertyGetter propertyGetter,
                                                    IItemProvider... shields) {
         for (IItemProvider shield : shields) {
-            ItemModelsProperties.registerProperty(shield.asItem(), override, propertyGetter);
+            ItemModelsProperties.func_239418_a_(shield.asItem(), override, propertyGetter);
         }
     }
 
