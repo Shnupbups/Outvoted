@@ -12,7 +12,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModEntityTypes {
-    public static DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, Outvoted.MOD_ID);
+    public static DeferredRegister<EntityType<?>> ENTITY_TYPES = new DeferredRegister<>(ForgeRegistries.ENTITIES, Outvoted.MOD_ID);
 
     public static final RegistryObject<EntityType<InfernoEntity>> INFERNO = ENTITY_TYPES
             .register("inferno", () -> EntityType.Builder
@@ -23,7 +23,7 @@ public class ModEntityTypes {
     public static final RegistryObject<EntityType<HungerEntity>> HUNGER = ENTITY_TYPES
             .register("hunger", () -> EntityType.Builder
                     .create(HungerEntity::new, EntityClassification.CREATURE)
-                    .size(1.0F, 1.0F)
+                    .size(0.9F, 1.2F)
                     .build(new ResourceLocation(Outvoted.MOD_ID, "hunger").toString()));
     public static final RegistryObject<EntityType<KrakenEntity>> KRAKEN = ENTITY_TYPES
             .register("kraken", () -> EntityType.Builder

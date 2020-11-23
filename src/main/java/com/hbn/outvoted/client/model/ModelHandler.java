@@ -7,12 +7,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import java.util.Map;
 
-@EventBusSubscriber(value = Dist.CLIENT, modid = Outvoted.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(value = Dist.CLIENT, modid = Outvoted.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModelHandler {
 
     @SubscribeEvent

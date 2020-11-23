@@ -44,8 +44,14 @@ public class InfernoHelmetModel<T extends LivingEntity> extends BipedModel<T> {
         this.head.setTextureOffset(0, 0).addBox(-1.5F, -10.0F - offset, -4.5F, 3.0F, 1.0F, 1.0F, 0.1F, false);
     }
 
+    /**
+     * Hacky fix cause it's broken
+     * <p>
+     * Adapted from https://gitlab.com/modding-legacy/mining-helmet/
+     */
     @Override
     protected Iterable<ModelRenderer> getHeadParts() {
+        // TODO SUPER HACKY FIX UNTIL FORGE CAN FIX setRotationAngles
         float offset = this.bipedHead.rotationPointY;
 
         this.head.copyModelAngles(this.bipedHead);

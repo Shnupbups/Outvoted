@@ -5,11 +5,13 @@ import com.hbn.outvoted.client.render.HungerRenderer;
 import com.hbn.outvoted.client.render.InfernoRenderer;
 import com.hbn.outvoted.client.render.KrakenRenderer;
 import com.hbn.outvoted.entities.HungerEntity;
-import com.hbn.outvoted.entities.InfernoEntity;
 import com.hbn.outvoted.entities.KrakenEntity;
 import com.hbn.outvoted.init.ModEntityTypes;
 import com.hbn.outvoted.items.ModdedSpawnEggItem;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.RegistryEvent;
@@ -32,6 +34,12 @@ public class ClientEventBusSubscriber {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPostRegisterEntities(final RegistryEvent.Register<EntityType<?>> event) {
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.INFERNO.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawn);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.HUNGER.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HungerEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(ModEntityTypes.KRAKEN.get(), EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING, KrakenEntity::canSpawn);
+
         ModdedSpawnEggItem.initSpawnEggs();
+
+        //ModCompatibility.initCompat();
     }
 }

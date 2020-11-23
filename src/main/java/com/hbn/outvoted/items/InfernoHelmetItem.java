@@ -2,7 +2,6 @@ package com.hbn.outvoted.items;
 
 import com.hbn.outvoted.Outvoted;
 import com.hbn.outvoted.client.model.InfernoHelmetModel;
-import com.hbn.outvoted.config.OutvotedConfig;
 import com.hbn.outvoted.init.ModItems;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.Entity;
@@ -19,11 +18,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.Collection;
+import java.util.Collections;
+
 public class InfernoHelmetItem extends ArmorItem {
     private boolean timer = true;
 
     public InfernoHelmetItem() {
-        super(ModArmor.BLAZE, EquipmentSlotType.HEAD, new Item.Properties().group(OutvotedConfig.COMMON.creativetab.get() ? Outvoted.TAB : ItemGroup.COMBAT));
+        super(ModArmor.BLAZE, EquipmentSlotType.HEAD, new Item.Properties().group(Outvoted.TAB_COMBAT));
     }
 
     @SuppressWarnings("unchecked")
@@ -38,6 +40,9 @@ public class InfernoHelmetItem extends ArmorItem {
         return "outvoted:textures/entity/inferno.png";
     }
 
+    /**
+     * Creates a Turtle Helmet esque Water Breathing effect but with Fire Resistance
+     */
     @Override
     public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
         if (player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == ModItems.INFERNO_HELMET.get() && player.isBurning() && !player.isCreative()) {
@@ -48,5 +53,10 @@ public class InfernoHelmetItem extends ArmorItem {
         } else {
             timer = true;
         }
+    }
+
+    @Override
+    public Collection<ItemGroup> getCreativeTabs() {
+        return Collections.singletonList(Outvoted.TAB_COMBAT);
     }
 }

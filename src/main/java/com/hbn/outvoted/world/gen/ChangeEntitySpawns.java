@@ -19,9 +19,12 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Outvoted.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ChangeEntitySpawns {
+    /**
+     * Checks Kraken entities in an area to limit spawn count
+     */
     @SubscribeEvent
-    public static void checkMobs(LivingSpawnEvent.CheckSpawn event) {
-        double area = 6.0; // Value for x, y, and z expansion to check for entities
+    public static void checkMobs(LivingSpawnEvent.CheckSpawn event) { // Below is probably bad practice, but I don't know of any other way to force 1 mob
+        double area = 6.0; // Value for x, 2*y, and z expansion to check for entities; a variable in case it causes lag or something
         Entity e = event.getEntity();
         if (OutvotedConfig.COMMON.spawnkraken.get()) {
             if (e instanceof KrakenEntity) {
@@ -35,9 +38,12 @@ public class ChangeEntitySpawns {
         }
     }
 
+    /**
+     * Add Inferno entities to large enough Blaze groups and to Mob Spawners
+     */
     @SubscribeEvent
     public static void changeMobs(LivingSpawnEvent.SpecialSpawn event) {
-        double area = 6.0D;
+        double area = 6.0D; // Value for x, 2*y, and z expansion to check for entities; a variable in case it causes lag or something
         Entity e = event.getEntity();
         if (OutvotedConfig.COMMON.spawninferno.get()) {
             if (e instanceof BlazeEntity) {
