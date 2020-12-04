@@ -2,6 +2,7 @@ package com.hbn.outvoted.entity;
 
 import com.hbn.outvoted.config.OutvotedConfig;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -227,9 +228,7 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
             if (source.getImmediateSource() instanceof LivingEntity && this.isInvulnerable()) {
                 LivingEntity entity = (LivingEntity) source.getImmediateSource();
                 if (entity.getHeldItemMainhand().getItem() instanceof AxeItem) {
-//                    double itemDamage = ((AxeItem) entity.getHeldItemMainhand().getItem()).getAttributeModifiers(EquipmentSlotType.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName()) + 1;
-                    double itemDamage = 6.0;
-                    System.out.println(((AxeItem) entity.getHeldItemMainhand().getItem()).getAttributeModifiers(EquipmentSlotType.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName()));
+                    double itemDamage = ((AxeItem) entity.getHeldItemMainhand().getItem()).getAttributeModifiers(EquipmentSlotType.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName()).iterator().next().getAmount() + 1;
                     if (amount == itemDamage + (itemDamage / 2)) { // Only disable shields on a critical axe hit
                         this.playSound(SoundEvents.BLOCK_ANVIL_PLACE, 0.3F, 1.5F);
                         this.shieldDisabled = true;
