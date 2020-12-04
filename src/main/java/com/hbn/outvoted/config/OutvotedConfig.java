@@ -22,7 +22,7 @@ public class OutvotedConfig {
         public final ForgeConfigSpec.IntValue ratekraken;
         //public final ForgeConfigSpec.BooleanValue infernovariant;
         //public final ForgeConfigSpec.BooleanValue krakenvariant;
-        //public final ForgeConfigSpec.BooleanValue restrictinferno;
+        public final ForgeConfigSpec.BooleanValue restrictinferno;
 
         /**
          * Common config setup
@@ -37,7 +37,7 @@ public class OutvotedConfig {
             rateinferno = builder.defineInRange("Inferno Spawn Weight", 1, 1, 100);
             healthinferno = builder.defineInRange("Max Health", 50.0D, 1.0D, 1000.0D);
             //infernovariant = builder.comment("Blue coloration to *both* Blazes and Infernos in Soul Sand Valleys. Disabled by default").define("Biome Variants", false);
-            //restrictinferno = builder.comment("Restrict Inferno groups to spawn only in Nether Wastes or all biomes").define("Restrict Spawning", true);
+            restrictinferno = builder.comment("Restrict Inferno groups to spawn only in Nether Wastes or all biomes. This option only applies if you are using a mod that adds Nether biomes, otherwise it won't change anything").define("Restrict Spawning", true);
 
             builder.pop();
             builder.comment("Great Hunger").push("hunger");

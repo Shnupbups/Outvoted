@@ -3,7 +3,10 @@ package com.hbn.outvoted.data;
 import com.hbn.outvoted.init.ModItems;
 import com.hbn.outvoted.init.ModRecipes;
 import net.minecraft.block.Blocks;
-import net.minecraft.data.*;
+import net.minecraft.data.CustomRecipeBuilder;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.RecipeProvider;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
@@ -19,14 +22,11 @@ public class Recipes extends RecipeProvider {
 
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-        SmithingRecipeBuilder.smithingRecipe(Ingredient.fromItems(Items.SHIELD), Ingredient.fromItems(ModItems.INFERNO_SHIELD_PART.get()), ModItems.INFERNO_SHIELD.get())
-                    .addCriterion("has_inferno_part", hasItem(ModItems.INFERNO_SHIELD_PART.get()))
-                    .build(consumer, new ResourceLocation("extendednether", "smithing"));
         ShapelessBuilder.shapelessRecipe(ModItems.INFERNO_SHIELD.get())
-                    .addIngredient(Items.SHIELD)
-                    .addIngredient(ModItems.INFERNO_SHIELD_PART.get())
-                    .addCriterion("has_shield_part", hasItem(ModItems.INFERNO_SHIELD_PART.get()))
-                    .build(consumer);
+                .addIngredient(Items.SHIELD)
+                .addIngredient(ModItems.INFERNO_SHIELD_PART.get())
+                .addCriterion("has_shield_part", hasItem(ModItems.INFERNO_SHIELD_PART.get()))
+                .build(consumer);
         ShapedBuilder.shapedRecipe(ModItems.INFERNO_SHIELD_PART.get())
                 .patternLine("MMM")
                 .patternLine("MCM")

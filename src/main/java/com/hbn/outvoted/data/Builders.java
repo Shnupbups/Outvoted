@@ -2,7 +2,6 @@ package com.hbn.outvoted.data;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.gson.JsonObject;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.ICriterionInstance;
@@ -12,15 +11,12 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Item;
-import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
-import net.minecraftforge.fml.common.Mod;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -149,7 +145,7 @@ class ShapelessBuilder extends ShapelessRecipeBuilder {
 
     @Override
     public ShapelessRecipeBuilder addIngredient(IItemProvider itemIn, int quantity) {
-        for(int i = 0; i < quantity; ++i) {
+        for (int i = 0; i < quantity; ++i) {
             this.addIngredient(Ingredient.fromItems(itemIn));
         }
 
@@ -163,7 +159,7 @@ class ShapelessBuilder extends ShapelessRecipeBuilder {
 
     @Override
     public ShapelessRecipeBuilder addIngredient(Ingredient ingredientIn, int quantity) {
-        for(int i = 0; i < quantity; ++i) {
+        for (int i = 0; i < quantity; ++i) {
             this.ingredients.add(ingredientIn);
         }
 
