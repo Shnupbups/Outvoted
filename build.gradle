@@ -32,7 +32,7 @@ minecraft {
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
             mods {
-                examplemod {
+                outvoted {
                     source sourceSets.main
                 }
             }
@@ -43,7 +43,7 @@ minecraft {
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
             mods {
-                examplemod {
+                outvoted {
                     source sourceSets.main
                 }
             }
@@ -53,9 +53,9 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'outvoted', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
             mods {
-                examplemod {
+                outvoted {
                     source sourceSets.main
                 }
             }
@@ -65,15 +65,18 @@ minecraft {
 
 repositories{
     maven { url 'https://repo.repsy.io/mvn/gandiber/geckolib' }
+    maven { url "https://www.cursemaven.com" }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.15.2-31.2.47'
 
     compile fg.deobf('software.bernie.geckolib:forge-1.15.2-geckolib:3.0.0-beta.8')
+//    compile fg.deobf('software.bernie.geckolib:forge-1.15.2-geckolib:3.0.0-beta.10')
+    compile fg.deobf("curse.maven:enb-390566:3121949")
+    compile fg.deobf("curse.maven:abncore-382216:2980113")
 }
 
-// Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
         attributes([

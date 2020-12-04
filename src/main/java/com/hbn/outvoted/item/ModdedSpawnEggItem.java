@@ -1,4 +1,4 @@
-package com.hbn.outvoted.items;
+package com.hbn.outvoted.item;
 
 import com.hbn.outvoted.Outvoted;
 import net.minecraft.block.DispenserBlock;
@@ -53,7 +53,7 @@ public class ModdedSpawnEggItem extends SpawnEggItem {
     @Override
     public Collection<ItemGroup> getCreativeTabs() {
         //if (this.entityTypeSupplier.get().toString().equals("entity.outvoted.soul_blaze") && !OutvotedConfig.COMMON.infernovariant.get()) {
-        if (this.entityTypeSupplier.get().toString().equals("entity.outvoted.soul_blaze")) {
+        if (this.entityTypeSupplier.get().getName().getString().equals("Soul Blaze")) {
             return Collections.EMPTY_LIST;
         }
         return Collections.singletonList(Outvoted.TAB_MISC);

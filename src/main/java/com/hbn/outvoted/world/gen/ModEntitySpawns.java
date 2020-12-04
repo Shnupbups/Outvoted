@@ -1,21 +1,17 @@
 package com.hbn.outvoted.world.gen;
 
-import com.hbn.outvoted.Outvoted;
 import com.hbn.outvoted.config.OutvotedConfig;
 import com.hbn.outvoted.init.ModEntityTypes;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@Mod.EventBusSubscriber(modid = Outvoted.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModEntitySpawns {
     /**
      * Adds entity spawns to biomes
      */
-    public static void spawnEntities(FMLLoadCompleteEvent event) {
+    public static void spawnEntities() {
         for (Biome biome : ForgeRegistries.BIOMES) {
             String biomename = biome.getRegistryName().toString();
             if (OutvotedConfig.COMMON.spawninferno.get()) {

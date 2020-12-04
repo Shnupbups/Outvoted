@@ -1,10 +1,10 @@
 package com.hbn.outvoted.init;
 
 import com.hbn.outvoted.Outvoted;
-import com.hbn.outvoted.entities.HungerEntity;
-import com.hbn.outvoted.entities.InfernoEntity;
-import com.hbn.outvoted.entities.KrakenEntity;
-import com.hbn.outvoted.entities.SoulBlazeEntity;
+import com.hbn.outvoted.entity.HungerEntity;
+import com.hbn.outvoted.entity.InfernoEntity;
+import com.hbn.outvoted.entity.KrakenEntity;
+import com.hbn.outvoted.entity.SoulBlazeEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;

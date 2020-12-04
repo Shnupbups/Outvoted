@@ -6,6 +6,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.data.*;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.ModList;
 
 import java.util.function.Consumer;
 
@@ -17,11 +19,14 @@ public class Recipes extends RecipeProvider {
 
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+        SmithingRecipeBuilder.smithingRecipe(Ingredient.fromItems(Items.SHIELD), Ingredient.fromItems(ModItems.INFERNO_SHIELD_PART.get()), ModItems.INFERNO_SHIELD.get())
+                    .addCriterion("has_inferno_part", hasItem(ModItems.INFERNO_SHIELD_PART.get()))
+                    .build(consumer, new ResourceLocation("extendednether", "smithing"));
         ShapelessBuilder.shapelessRecipe(ModItems.INFERNO_SHIELD.get())
-                .addIngredient(Items.SHIELD)
-                .addIngredient(ModItems.INFERNO_SHIELD_PART.get())
-                .addCriterion("has_shield_part", hasItem(ModItems.INFERNO_SHIELD_PART.get()))
-                .build(consumer);
+                    .addIngredient(Items.SHIELD)
+                    .addIngredient(ModItems.INFERNO_SHIELD_PART.get())
+                    .addCriterion("has_shield_part", hasItem(ModItems.INFERNO_SHIELD_PART.get()))
+                    .build(consumer);
         ShapedBuilder.shapedRecipe(ModItems.INFERNO_SHIELD_PART.get())
                 .patternLine("MMM")
                 .patternLine("MCM")

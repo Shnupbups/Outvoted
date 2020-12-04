@@ -2,8 +2,8 @@ package com.hbn.outvoted.world.gen;
 
 import com.hbn.outvoted.Outvoted;
 import com.hbn.outvoted.config.OutvotedConfig;
-import com.hbn.outvoted.entities.InfernoEntity;
-import com.hbn.outvoted.entities.KrakenEntity;
+import com.hbn.outvoted.entity.InfernoEntity;
+import com.hbn.outvoted.entity.KrakenEntity;
 import com.hbn.outvoted.init.ModEntityTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -16,7 +16,6 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 

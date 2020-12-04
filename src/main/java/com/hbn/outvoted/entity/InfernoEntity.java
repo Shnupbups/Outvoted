@@ -1,4 +1,4 @@
-package com.hbn.outvoted.entities;
+package com.hbn.outvoted.entity;
 
 import com.hbn.outvoted.config.OutvotedConfig;
 import net.minecraft.entity.*;
@@ -8,7 +8,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
