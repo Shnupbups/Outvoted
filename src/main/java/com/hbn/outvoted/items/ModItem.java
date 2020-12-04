@@ -1,5 +1,5 @@
-/**
- * This class only exists to make the Creative Tab config option work, however this can be easily expanded
+/*
+  This class only exists to make the Creative Tab config option work with normal items, however this can be easily expanded
  */
 
 package com.hbn.outvoted.items;
@@ -12,8 +12,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class ModItem extends Item {
+
     public ModItem(Properties properties) {
-        super(properties);
+        super(properties.group(Outvoted.TAB_MISC));
     }
 
     @Override

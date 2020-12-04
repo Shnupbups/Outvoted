@@ -3,7 +3,6 @@ package com.hbn.outvoted.items;
 import com.hbn.outvoted.Outvoted;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -14,10 +13,13 @@ import java.util.function.Supplier;
 
 public enum ModArmor implements IArmorMaterial {
 
-    BLAZE(Outvoted.MOD_ID + ":blaze", 25, new int[]{3, 3, 3, 3}, 0, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND,
+    /*BLAZE(Outvoted.MOD_ID + ":blaze", 23, new int[]{2, 2, 2, 2}, 0, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE,
             0.5F, () -> {
         return Ingredient.fromItems(Items.BLAZE_ROD.getItem());
-    }, 0.0F);
+    }, 0.0F);*/
+
+    INFERNO(Outvoted.MOD_ID + ":inferno", 25, new int[]{2, 2, 2, 2}, 0, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND,
+            0.5F, null, 0.0F);
 
     private static final int[] MAX_DAMAGE_ARRAY = new int[]{11, 16, 15, 13};
     private final String name;

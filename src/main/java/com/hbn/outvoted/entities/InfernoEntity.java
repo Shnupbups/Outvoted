@@ -6,6 +6,9 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.Item;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -32,6 +35,7 @@ import java.util.EnumSet;
 public class InfernoEntity extends MonsterEntity implements IAnimatable {
     private float heightOffset = 0.5F;
     private int heightOffsetUpdateTime;
+    private boolean shieldDisabled = false;
     private static final DataParameter<Boolean> SHIELDING = EntityDataManager.createKey(InfernoEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Byte> ON_FIRE = EntityDataManager.createKey(InfernoEntity.class, DataSerializers.BYTE);
     private static final DataParameter<Integer> VARIANT = EntityDataManager.createKey(InfernoEntity.class, DataSerializers.VARINT);
@@ -126,11 +130,15 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
     }
 
     public void shielding(boolean shielding) {
-        this.dataManager.set(SHIELDING, shielding);
+        if (!this.shieldDisabled) {
+            this.dataManager.set(SHIELDING, shielding);
+        } else {
+            this.dataManager.set(SHIELDING, false);
+        }
     }
 
     public boolean shielding() {
-        return this.dataManager.get(SHIELDING);
+        return this.dataManager.get(SHIELDING) && !this.shieldDisabled;
     }
 
     public int variant() {
@@ -175,7 +183,7 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
         --this.heightOffsetUpdateTime;
         if (this.heightOffsetUpdateTime <= 0) {
             this.heightOffsetUpdateTime = 100;
-            this.heightOffset = 0.5F + (float) this.rand.nextGaussian() * 3.0F;
+            this.heightOffset = 0.5F + (float) this.rand.nextGaussian() * (3 / ((this.getHealth() / 25) + 1));
         }
 
         LivingEntity livingentity = this.getAttackTarget();
@@ -216,18 +224,33 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
     }
 
     public boolean attackEntityFrom(DamageSource source, float amount) {
-        if (this.isInvulnerableTo(source)) {
-            this.playSound(SoundEvents.BLOCK_ANVIL_PLACE, 0.3F, 0.5F);
-
-            if (source.isProjectile()) {
-                source.getImmediateSource().setFire(12);
+        if (!this.world.isRemote) {
+            if (source.getImmediateSource() instanceof LivingEntity && this.isInvulnerable()) {
+                LivingEntity entity = (LivingEntity) source.getImmediateSource();
+                if (entity.getHeldItemMainhand().getItem() instanceof AxeItem) {
+//                    double itemDamage = ((AxeItem) entity.getHeldItemMainhand().getItem()).getAttributeModifiers(EquipmentSlotType.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName()) + 1;
+                    double itemDamage = 6.0;
+                    System.out.println(((AxeItem) entity.getHeldItemMainhand().getItem()).getAttributeModifiers(EquipmentSlotType.MAINHAND).get(SharedMonsterAttributes.ATTACK_DAMAGE.getName()));
+                    if (amount == itemDamage + (itemDamage / 2)) { // Only disable shields on a critical axe hit
+                        this.playSound(SoundEvents.BLOCK_ANVIL_PLACE, 0.3F, 1.5F);
+                        this.shieldDisabled = true;
+                        this.shielding(false);
+                        this.setInvulnerable(false);
+                        return false;
+                    }
+                }
             }
+            if (this.isInvulnerableTo(source)) {
+                this.playSound(SoundEvents.BLOCK_ANVIL_PLACE, 0.3F, 0.5F);
 
-            if (source.getImmediateSource() instanceof PlayerEntity || source.getImmediateSource() instanceof MobEntity) {
-                source.getImmediateSource().setFire(8);
+                if (source.isProjectile()) {
+                    source.getImmediateSource().setFire(12);
+                } else if (source.getImmediateSource() != null) {
+                    source.getImmediateSource().setFire(8);
+                }
+
+                return false;
             }
-
-            return false;
         }
         return super.attackEntityFrom(source, amount);
     }
@@ -290,7 +313,7 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
                 }
 
                 double d0 = this.blaze.getDistanceSq(livingentity);
-                if (d0 < 9.0D) {
+                if (d0 < 4.0D) {
 
                     this.blaze.setOnFire(true);
 
@@ -327,7 +350,7 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
                             //this.attackTime = 30;
                             this.attackTime = (int) (25 * healthPercent + 5);
                         } else {
-                            this.attackTime = 175;
+                            this.attackTime = 200;
                             this.attackStep = 0;
                             this.blaze.setOnFire(false);
                         }
@@ -359,10 +382,11 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
                                 }
                             }
                         }
-                    } else if (this.attackTime < 150 + health && this.attackTime > 100 - health) {
+                    } else if (this.attackTime < 160 + health && this.attackTime > 90 - health) {
                         this.blaze.shielding(true);
                     } else if (this.attackTime >= 30 && this.attackTime >= 50) {
                         this.blaze.shielding(false);
+                        this.blaze.shieldDisabled = false;
                     }
 
                     this.blaze.setInvulnerable(this.blaze.shielding());

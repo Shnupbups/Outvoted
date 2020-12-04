@@ -6,6 +6,11 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:killed_by_player"
+            }
+          ],
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -32,17 +37,17 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "outvoted:inferno_helmet"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        },
-        {
-          "condition": "minecraft:random_chance_with_looting",
-          "chance": 0.025,
-          "looting_multiplier": 0.025
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance_with_looting",
+              "chance": 0.15,
+              "looting_multiplier": 0.05
+            },
+            {
+              "condition": "minecraft:killed_by_player"
+            }
+          ],
+          "name": "outvoted:inferno_piece"
         }
       ]
     },
@@ -51,17 +56,17 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "outvoted:inferno_piece"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        },
-        {
-          "condition": "minecraft:random_chance_with_looting",
-          "chance": 0.125,
-          "looting_multiplier": 0.05
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance_with_looting",
+              "chance": 0.05,
+              "looting_multiplier": 0.025
+            },
+            {
+              "condition": "minecraft:killed_by_player"
+            }
+          ],
+          "name": "outvoted:inferno_helmet"
         }
       ]
     }

@@ -2,7 +2,6 @@ package com.hbn.outvoted.items;
 
 import com.hbn.outvoted.Outvoted;
 import com.hbn.outvoted.client.model.InfernoHelmetModel;
-import com.hbn.outvoted.init.ModItems;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -22,10 +21,11 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class InfernoHelmetItem extends ArmorItem {
-    private boolean timer = true;
+    private int timer = 0;
+//    private boolean timer = true;
 
     public InfernoHelmetItem() {
-        super(ModArmor.BLAZE, EquipmentSlotType.HEAD, new Item.Properties().group(Outvoted.TAB_COMBAT));
+        super(ModArmor.INFERNO, EquipmentSlotType.HEAD, new Item.Properties().group(Outvoted.TAB_COMBAT));
     }
 
     @SuppressWarnings("unchecked")
@@ -45,14 +45,24 @@ public class InfernoHelmetItem extends ArmorItem {
      */
     @Override
     public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
-        if (player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == ModItems.INFERNO_HELMET.get() && player.isBurning() && !player.isCreative()) {
+        player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 1, 0, false, false, true));
+        if (player.isBurning()) {
+            if (timer % 40 == 0) {
+                stack.damageItem(1 + (timer / 600), player, consumer -> consumer.sendBreakAnimation(EquipmentSlotType.HEAD));
+                //timer = 0;
+            }
+            timer++;
+        } else {
+            timer = 0;
+        }
+        /*if (player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == ModItems.INFERNO_HELMET.get() && player.isBurning() && !player.isCreative()) {
             if (timer) {
-                player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 300, 0, false, false, true));
+                player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 400, 0, false, false, true));
                 timer = false;
             }
         } else {
             timer = true;
-        }
+        }*/
     }
 
     @Override

@@ -1,12 +1,12 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "M",
-    "M",
-    "M"
+    "P",
+    "P",
+    "P"
   ],
   "key": {
-    "M": {
+    "P": {
       "item": "minecraft:prismarine_bricks"
     }
   },

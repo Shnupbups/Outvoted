@@ -12,7 +12,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid = Outvoted.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModEntitySpawns {
-
     /**
      * Adds entity spawns to biomes
      */
@@ -22,7 +21,7 @@ public class ModEntitySpawns {
             if (OutvotedConfig.COMMON.spawninferno.get()) {
                 if (biome.getCategory() == Biome.Category.NETHER) {
                     biome.getSpawns(EntityClassification.MONSTER)
-                            .add(new Biome.SpawnListEntry(EntityType.BLAZE, OutvotedConfig.COMMON.rateblaze.get(), 3, 4));
+                            .add(new Biome.SpawnListEntry(EntityType.BLAZE, OutvotedConfig.COMMON.rateinferno.get(), 1, 1));
                 }
             }
             if (OutvotedConfig.COMMON.spawnhunger.get()) {

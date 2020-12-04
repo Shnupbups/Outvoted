@@ -1,7 +1,6 @@
 package com.hbn.outvoted.items;
 
 import com.hbn.outvoted.Outvoted;
-import com.hbn.outvoted.config.OutvotedConfig;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.IBlockSource;
@@ -23,7 +22,7 @@ public class ModdedSpawnEggItem extends SpawnEggItem {
     private final Lazy<? extends EntityType<?>> entityTypeSupplier;
 
     public ModdedSpawnEggItem(RegistryObject<? extends EntityType<?>> entityTypeSupplier, int primaryColorIn, int secondaryColorIn, Properties builder) {
-        super(null, primaryColorIn, secondaryColorIn, builder);
+        super(null, primaryColorIn, secondaryColorIn, builder.group(Outvoted.TAB_MISC));
         this.entityTypeSupplier = Lazy.of(entityTypeSupplier);
         UNADDED_EGGS.add(this);
     }
@@ -53,6 +52,10 @@ public class ModdedSpawnEggItem extends SpawnEggItem {
 
     @Override
     public Collection<ItemGroup> getCreativeTabs() {
+        //if (this.entityTypeSupplier.get().toString().equals("entity.outvoted.soul_blaze") && !OutvotedConfig.COMMON.infernovariant.get()) {
+        if (this.entityTypeSupplier.get().toString().equals("entity.outvoted.soul_blaze")) {
+            return Collections.EMPTY_LIST;
+        }
         return Collections.singletonList(Outvoted.TAB_MISC);
     }
 
