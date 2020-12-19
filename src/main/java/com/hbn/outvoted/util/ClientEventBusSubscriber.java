@@ -4,7 +4,6 @@ import com.hbn.outvoted.Outvoted;
 import com.hbn.outvoted.client.render.HungerRenderer;
 import com.hbn.outvoted.client.render.InfernoRenderer;
 import com.hbn.outvoted.client.render.KrakenRenderer;
-import com.hbn.outvoted.client.render.SoulBlazeRenderer;
 import com.hbn.outvoted.entity.HungerEntity;
 import com.hbn.outvoted.entity.KrakenEntity;
 import com.hbn.outvoted.init.ModEntityTypes;
@@ -29,7 +28,6 @@ public class ClientEventBusSubscriber {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void onClientSetup(FMLClientSetupEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SOUL_BLAZE.get(), SoulBlazeRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.INFERNO.get(), InfernoRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.HUNGER.get(), HungerRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.KRAKEN.get(), KrakenRenderer::new);
@@ -39,13 +37,10 @@ public class ClientEventBusSubscriber {
     public static void onPostRegisterEntities(final RegistryEvent.Register<EntityType<?>> event) {
         ModEntitySpawns.spawnEntities();
 
-        EntitySpawnPlacementRegistry.register(ModEntityTypes.SOUL_BLAZE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawn);
         EntitySpawnPlacementRegistry.register(ModEntityTypes.INFERNO.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawn);
         EntitySpawnPlacementRegistry.register(ModEntityTypes.HUNGER.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HungerEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(ModEntityTypes.KRAKEN.get(), EntitySpawnPlacementRegistry.PlacementType.IN_WATER, Heightmap.Type.MOTION_BLOCKING, KrakenEntity::canSpawn);
 
         ModdedSpawnEggItem.initSpawnEggs();
-
-        //ModCompatibility.initCompat();
     }
 }

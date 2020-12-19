@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_shield_part": {
+    "has_inferno_part": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "has_shield_part",
+      "has_inferno_part",
       "has_the_recipe"
     ]
   ]

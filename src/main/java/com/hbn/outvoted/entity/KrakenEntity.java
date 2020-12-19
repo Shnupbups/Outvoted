@@ -1,7 +1,7 @@
-// TODO: Remove the loads of unnecessary code that still remains from Guardian entity
 package com.hbn.outvoted.entity;
 
 import com.hbn.outvoted.config.OutvotedConfig;
+import com.hbn.outvoted.init.ModSounds;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.controller.LookController;
 import net.minecraft.entity.ai.controller.MovementController;
@@ -9,7 +9,6 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.item.BoatEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -28,7 +27,6 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -110,11 +108,6 @@ public class KrakenEntity extends MonsterEntity implements IAnimatable {
      */
     protected PathNavigator createNavigator(World worldIn) {
         return new SwimmerPathNavigator(this, worldIn);
-    }
-
-    @Override
-    public IPacket<?> createSpawnPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     protected void registerData() {
@@ -202,15 +195,15 @@ public class KrakenEntity extends MonsterEntity implements IAnimatable {
     }
 
     protected SoundEvent getAmbientSound() {
-        return this.isInWaterOrBubbleColumn() ? SoundEvents.ENTITY_GUARDIAN_AMBIENT : SoundEvents.ENTITY_GUARDIAN_AMBIENT_LAND;
+        return ModSounds.KRAKEN_AMBIENT.get();
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return this.isInWaterOrBubbleColumn() ? SoundEvents.ENTITY_GUARDIAN_HURT : SoundEvents.ENTITY_GUARDIAN_HURT_LAND;
+        return ModSounds.KRAKEN_HIT.get();
     }
 
     protected SoundEvent getDeathSound() {
-        return this.isInWaterOrBubbleColumn() ? SoundEvents.ENTITY_GUARDIAN_DEATH : SoundEvents.ENTITY_GUARDIAN_DEATH_LAND;
+        return ModSounds.KRAKEN_DEATH.get();
     }
 
     protected boolean canTriggerWalking() {

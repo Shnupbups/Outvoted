@@ -20,7 +20,7 @@ public class OutvotedConfig {
         public final ForgeConfigSpec.IntValue rateinferno;
         public final ForgeConfigSpec.IntValue ratehunger;
         public final ForgeConfigSpec.IntValue ratekraken;
-        //public final ForgeConfigSpec.BooleanValue infernovariant;
+        public final ForgeConfigSpec.BooleanValue infernovariant;
         //public final ForgeConfigSpec.BooleanValue krakenvariant;
         public final ForgeConfigSpec.BooleanValue restrictinferno;
 
@@ -33,11 +33,11 @@ public class OutvotedConfig {
         public Common(ForgeConfigSpec.Builder builder) {
             builder.comment("Hovering Inferno").push("inferno");
 
-            spawninferno = builder.comment("This will disable the natural blaze spawns and all inferno spawns (natural + spawner)").define("Natural Spawning", true);
+            spawninferno = builder.comment("This will affect all Inferno spawns (natural + spawner)").define("Natural Spawning", true);
             rateinferno = builder.defineInRange("Inferno Spawn Weight", 1, 1, 100);
             healthinferno = builder.defineInRange("Max Health", 50.0D, 1.0D, 1000.0D);
-            //infernovariant = builder.comment("Blue coloration to *both* Blazes and Infernos in Soul Sand Valleys. Disabled by default").define("Biome Variants", false);
-            restrictinferno = builder.comment("Restrict Inferno groups to spawn only in Nether Wastes or all biomes. This option only applies if you are using a mod that adds Nether biomes, otherwise it won't change anything").define("Restrict Spawning", true);
+            infernovariant = builder.comment("Blue coloration to *both* Blazes and Infernos in Soul Sand Valleys. Disabled by default to keep it Vanilla").define("Biome Variants", false);
+            restrictinferno = builder.comment("Restrict Inferno groups to spawn only in Nether Wastes or not").define("Restrict Spawning", true);
 
             builder.pop();
             builder.comment("Great Hunger").push("hunger");
@@ -73,7 +73,7 @@ public class OutvotedConfig {
 
         /**
          * Client config setup
-         * Just used for the creative tab
+         * Just used for the creative tab right now
          *
          * @param builder
          */

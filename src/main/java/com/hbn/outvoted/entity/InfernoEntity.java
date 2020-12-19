@@ -1,15 +1,17 @@
 package com.hbn.outvoted.entity;
 
+import com.hbn.outvoted.Outvoted;
 import com.hbn.outvoted.config.OutvotedConfig;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
-import net.minecraft.network.IPacket;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -18,10 +20,12 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -30,6 +34,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
+import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 public class InfernoEntity extends MonsterEntity implements IAnimatable {
@@ -44,7 +49,7 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
 
     public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (this.shielding()) {
+        if (this.getShielding()) {
             event.getController().transitionLengthTicks = 5;
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.inferno.shield").addAnimation("animation.inferno.shield2"));
         } else {
@@ -112,13 +117,34 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
-    @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 1.8F;
+    }
+
+    public void writeAdditional(CompoundNBT compound) {
+        super.writeAdditional(compound);
+        compound.putInt("Variant", this.getVariant());
+    }
+
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
+    public void readAdditional(CompoundNBT compound) {
+        super.readAdditional(compound);
+        this.setVariant(compound.getInt("Variant"));
+    }
+
+    @Nullable
+    public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+        int type;
+        Block block = this.world.getBlockState(new BlockPos(this.getPositionVec().add(0D, -0.1D, 0D))).getBlock();
+        if (Outvoted.matchesBlock(block, Blocks.SOUL_SAND)) {
+            type = 1;
+        } else {
+            type = 0;
+        }
+        this.setVariant(type);
+        return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
     @Override
@@ -126,10 +152,10 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
         super.registerData();
         this.dataManager.register(SHIELDING, Boolean.FALSE);
         this.dataManager.register(ON_FIRE, (byte) 0);
-        this.dataManager.register(VARIANT, 2);
+        this.dataManager.register(VARIANT, 0);
     }
 
-    public void shielding(boolean shielding) {
+    public void setShielding(boolean shielding) {
         if (!this.shieldDisabled) {
             this.dataManager.set(SHIELDING, shielding);
         } else {
@@ -137,14 +163,15 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
         }
     }
 
-    public boolean shielding() {
+    public boolean getShielding() {
         return this.dataManager.get(SHIELDING) && !this.shieldDisabled;
     }
 
-    public int variant() {
-        if (this.dataManager.get(VARIANT) == 2) {
-            this.dataManager.set(VARIANT, this.world.getBiome(this.getPosition()).getRegistryName().toString().equals("minecraft:soul_sand_valley") ? 1 : 0);
-        }
+    public void setVariant(int type) {
+        this.dataManager.set(VARIANT, type);
+    }
+
+    public int getVariant() {
         return this.dataManager.get(VARIANT);
     }
 
@@ -168,7 +195,7 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
             }
 
         }
-        if (this.shielding()) {
+        if (this.getShielding()) {
             this.world.addParticle(ParticleTypes.LAVA, this.getPosXRandom(0.5D), this.getPosYRandom(), this.getPosZRandom(0.5D), 0.0D, 0.0D, 0.0D);
         }
 
@@ -232,7 +259,7 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
                     if (amount == itemDamage + (itemDamage / 2)) { // Only disable shields on a critical axe hit
                         this.playSound(SoundEvents.BLOCK_ANVIL_PLACE, 0.3F, 1.5F);
                         this.shieldDisabled = true;
-                        this.shielding(false);
+                        this.setShielding(false);
                         this.setInvulnerable(false);
                         return false;
                     }
@@ -338,7 +365,7 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
                     }
 
                     if (this.attackTime <= 0) {
-                        this.blaze.shielding(false);
+                        this.blaze.setShielding(false);
                         ++this.attackStep;
                         if (this.attackStep == 1) {
                             //this.attackTime = 60;
@@ -381,13 +408,13 @@ public class InfernoEntity extends MonsterEntity implements IAnimatable {
                             }
                         }
                     } else if (this.attackTime < 160 + health && this.attackTime > 90 - health) {
-                        this.blaze.shielding(true);
+                        this.blaze.setShielding(true);
                     } else if (this.attackTime >= 30 && this.attackTime >= 50) {
-                        this.blaze.shielding(false);
+                        this.blaze.setShielding(false);
                         this.blaze.shieldDisabled = false;
                     }
 
-                    this.blaze.setInvulnerable(this.blaze.shielding());
+                    this.blaze.setInvulnerable(this.blaze.getShielding());
 
                     this.blaze.getLookController().setLookPositionWithEntity(livingentity, 10.0F, 10.0F);
                 } else if (this.firedRecentlyTimer < 5) {

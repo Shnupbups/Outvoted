@@ -23,11 +23,11 @@ import java.util.Random;
 public class ChangeEntitySpawns {
     /**
      * Checks entities in an area to force limit spawn count
-     * Probably awful practice, but this is a quick and dirty way to force 1 mob
+     * Probably awful practice, but this is a quick and dirty way to force 1 mob in an area
      */
     @SubscribeEvent
-    public static void checkMobs(LivingSpawnEvent.CheckSpawn event) { //
-        double area = 6.0; // Value for x, y, and z expansion to check for entities; a variable in case it causes lag or something
+    public static void checkMobs(LivingSpawnEvent.CheckSpawn event) {
+        double area = 6.0; // Value for x, y, and z expansion to check for entities
         Entity e = event.getEntity();
         if (OutvotedConfig.COMMON.spawnkraken.get()) {
             if (e instanceof KrakenEntity) {
@@ -52,7 +52,7 @@ public class ChangeEntitySpawns {
     }
 
     /**
-     * Adds Blazes around Infernos and adds Infernos to Mob Spawners
+     * Adds Blazes to Inferno spawns and adds Infernos to Mob Spawners
      */
     @SubscribeEvent
     public static void changeMobs(LivingSpawnEvent.SpecialSpawn event) {
@@ -75,7 +75,7 @@ public class ChangeEntitySpawns {
                     for (int i = 1; i <= rand; i++) {
                         BlazeEntity blaze = EntityType.BLAZE.create(world);
                         blaze.setPositionAndRotation(e.getPosXRandom(2.0D), e.getPosY(), e.getPosZRandom(2.0D), e.rotationYaw, e.rotationPitch);
-                        while (!world.isAirBlock(blaze.getPosition())) { // Should prevent spawning in blocks
+                        while (!world.isAirBlock(blaze.getPosition())) { // Should prevent spawning inside of blocks
                             blaze.setPositionAndRotation(e.getPosXRandom(2.0D), e.getPosY(), e.getPosZRandom(2.0D), e.rotationYaw, e.rotationPitch);
                         }
                         world.addEntity(blaze);

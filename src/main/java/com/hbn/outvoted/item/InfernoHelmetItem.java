@@ -3,6 +3,8 @@ package com.hbn.outvoted.item;
 import com.hbn.outvoted.Outvoted;
 import com.hbn.outvoted.client.model.InfernoHelmetModel;
 import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,8 +19,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 public class InfernoHelmetItem extends ArmorItem {
     private int timer = 0;
@@ -40,9 +42,6 @@ public class InfernoHelmetItem extends ArmorItem {
         return "outvoted:textures/entity/inferno.png";
     }
 
-    /**
-     * Creates a Turtle Helmet esque Water Breathing effect but with Fire Resistance
-     */
     @Override
     public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
         player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 1, 0, false, false, true));
@@ -67,6 +66,21 @@ public class InfernoHelmetItem extends ArmorItem {
 
     @Override
     public Collection<ItemGroup> getCreativeTabs() {
-        return Collections.singletonList(Outvoted.TAB_COMBAT);
+        Collection<ItemGroup> groups = new ArrayList<>();
+        groups.add(Outvoted.TAB_COMBAT);
+        groups.add(ItemGroup.SEARCH);
+        return groups;
+    }
+
+    /**
+     * Allow or forbid the specific book/item combination as an anvil enchant
+     *
+     * @param stack The item
+     * @param book  The book
+     * @return if the enchantment is allowed
+     */
+    @Override
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        return !EnchantmentHelper.getEnchantments(book).containsKey(Enchantments.MENDING);
     }
 }

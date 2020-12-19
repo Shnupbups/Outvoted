@@ -9,7 +9,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.EntityLootTables;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.*;
 import net.minecraft.world.storage.loot.conditions.KilledByPlayer;
@@ -87,7 +86,7 @@ public class LootTables extends LootTableProvider {
                     .addLootPool(LootPool.builder()
                             .rolls(ConstantRange.of(1))
                             .addEntry(ItemLootEntry.builder(ModItems.VOID_HEART.get())
-                                    .acceptCondition(RandomChanceWithLooting.builder(0.2F, 0.05F))
+                                    .acceptCondition(RandomChanceWithLooting.builder(0.1F, 0.05F))
                                     .acceptCondition(KilledByPlayer.builder())))
             );
 
@@ -95,15 +94,6 @@ public class LootTables extends LootTableProvider {
                     .addLootPool(LootPool.builder()
                             .rolls(ConstantRange.of(1))
                             .addEntry(ItemLootEntry.builder(ModItems.KRAKEN_TOOTH.get())
-                                    .acceptFunction(SetCount.builder(RandomValueRange.of(0.0F, 1.0F)))
-                                    .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))
-                                    .acceptCondition(KilledByPlayer.builder())))
-            );
-
-            this.registerLootTable(ModEntityTypes.SOUL_BLAZE.get(), LootTable.builder()
-                    .addLootPool(LootPool.builder()
-                            .rolls(ConstantRange.of(1))
-                            .addEntry(ItemLootEntry.builder(Items.BLAZE_ROD)
                                     .acceptFunction(SetCount.builder(RandomValueRange.of(0.0F, 1.0F)))
                                     .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0F, 1.0F)))
                                     .acceptCondition(KilledByPlayer.builder())))
