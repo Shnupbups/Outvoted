@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.entity.monster.BlazeEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
@@ -29,7 +30,7 @@ public class InfernoRenderer extends GeoEntityRenderer<InfernoEntity> {
         return RenderType.getEntityTranslucent(this.getEntityTexture(animatable));
     }
 
-    protected int getBlockLight(InfernoEntity entityIn, BlockPos partialTicks) {
+    protected int getBlockLight(InfernoEntity entityIn, float partialTicks) {
         return 15;
     }
 

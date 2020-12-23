@@ -78,5 +78,4 @@ public enum ModArmor implements IArmorMaterial {
     public float getToughness() {
         return this.toughness;
     }
-
 }

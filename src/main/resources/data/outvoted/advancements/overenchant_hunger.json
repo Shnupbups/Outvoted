@@ -391,21 +391,6 @@
         ]
       }
     },
-    "soul": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "enchantments": [
-              {
-                "enchantment": "soul_speed",
-                "levels": 4
-              }
-            ]
-          }
-        ]
-      }
-    },
     "sweep": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
@@ -479,7 +464,6 @@
       "riptide",
       "sharp",
       "smite",
-      "soul",
       "sweep",
       "thorns",
       "unbreaking"
