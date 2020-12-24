@@ -1,3 +1,5 @@
+// Adapted from https://github.com/ToMe25/Better-Shields/
+
 package com.hbn.outvoted.client.render;
 
 import com.hbn.outvoted.client.model.InfernoShieldModel;
@@ -27,7 +29,7 @@ public class ShieldRenderer extends ItemStackTileEntityRenderer {
         //rendermaterial = flag ? InfernoShieldModel.base : InfernoShieldModel.basenop;
         RenderMaterial rendermaterial = InfernoShieldModel.base;
 
-        IVertexBuilder ivertexbuilder = rendermaterial.getSprite().wrapBuffer(ItemRenderer.getEntityGlintVertexBuilder(
+        IVertexBuilder ivertexbuilder = rendermaterial.getSprite().wrapBuffer(ItemRenderer.func_239386_a_(
                 buffer, modelShield.getRenderType(rendermaterial.getAtlasLocation()), true, stack.hasEffect()));
         this.modelShield.func_228294_b_().render(matrixStack, ivertexbuilder, combinedLight, combinedOverlay, 1.0F,
                 1.0F, 1.0F, 1.0F);

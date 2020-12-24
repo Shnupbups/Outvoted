@@ -6,11 +6,11 @@
     "MMM"
   ],
   "key": {
-    "C": {
-      "item": "outvoted:inferno_piece"
-    },
     "M": {
       "item": "minecraft:polished_blackstone"
+    },
+    "C": {
+      "item": "outvoted:inferno_piece"
     }
   },
   "result": {

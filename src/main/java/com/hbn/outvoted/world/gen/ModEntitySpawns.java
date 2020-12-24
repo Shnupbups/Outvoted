@@ -1,41 +1,41 @@
 package com.hbn.outvoted.world.gen;
 
-import com.hbn.outvoted.Outvoted;
 import com.hbn.outvoted.config.OutvotedConfig;
 import com.hbn.outvoted.init.ModEntityTypes;
 import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@Mod.EventBusSubscriber(modid = Outvoted.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModEntitySpawns {
-
-    @SubscribeEvent
-    public static void spawnEntities(FMLLoadCompleteEvent event) {
+    /**
+     * Adds entity spawns to biomes
+     */
+    public static void spawnEntities() {
         for (Biome biome : ForgeRegistries.BIOMES) {
+            String biomename = biome.getRegistryName().toString();
             if (OutvotedConfig.COMMON.spawninferno.get()) {
-                if (biome.getCategory() == Biome.Category.NETHER) {
-                    biome.getSpawns(EntityClassification.MONSTER)
-                            .add(new Biome.SpawnListEntry(EntityType.BLAZE, 10, 3, 5));
+                if (OutvotedConfig.COMMON.restrictinferno.get()) {
+                    if (biomename.equals("minecraft:nether")) {
+                        biome.getSpawns(EntityClassification.MONSTER)
+                                .add(new Biome.SpawnListEntry(ModEntityTypes.INFERNO.get(), OutvotedConfig.COMMON.rateinferno.get(), 1, 1));
+                    }
+                } else {
+                    if (biome.getCategory() == Biome.Category.NETHER) {
+                        biome.getSpawns(EntityClassification.MONSTER)
+                                .add(new Biome.SpawnListEntry(ModEntityTypes.INFERNO.get(), OutvotedConfig.COMMON.rateinferno.get(), 1, 1));
+                    }
                 }
             }
             if (OutvotedConfig.COMMON.spawnhunger.get()) {
-                if (biome.getCategory() == Biome.Category.DESERT) {
-                    biome.getSpawns(EntityClassification.CREATURE)
-                            .add(new Biome.SpawnListEntry(ModEntityTypes.HUNGER.get(), 90, 1, 2));
-                } else if (biome.getCategory() == Biome.Category.SWAMP) {
-                    biome.getSpawns(EntityClassification.CREATURE)
-                            .add(new Biome.SpawnListEntry(ModEntityTypes.HUNGER.get(), 70, 1, 2));
+                if (biome.getCategory() == Biome.Category.DESERT || biome.getCategory() == Biome.Category.SWAMP) {
+                    biome.getSpawns(EntityClassification.MONSTER)
+                            .add(new Biome.SpawnListEntry(ModEntityTypes.HUNGER.get(), OutvotedConfig.COMMON.ratehunger.get(), 1, 1));
                 }
             }
             if (OutvotedConfig.COMMON.spawnkraken.get()) {
-                if (biome.getCategory() == Biome.Category.OCEAN) {
+                if (biome.getDepth() == -1.8F && !biomename.equals("minecraft:deep_frozen_ocean")) { // Possibly makes modded deep oceans compatible? (If those even exist, and use vanilla values)
                     biome.getSpawns(EntityClassification.WATER_CREATURE)
-                            .add(new Biome.SpawnListEntry(ModEntityTypes.KRAKEN.get(), 10, 1, 1));
+                            .add(new Biome.SpawnListEntry(ModEntityTypes.KRAKEN.get(), OutvotedConfig.COMMON.ratekraken.get(), 1, 1));
                 }
             }
         }

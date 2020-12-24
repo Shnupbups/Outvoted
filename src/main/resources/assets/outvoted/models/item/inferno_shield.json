@@ -1,12 +1,12 @@
 {
-  "parent": "item/shield",
+  "parent": "minecraft:item/shield",
   "textures": {
-    "particle": "block/polished_blackstone"
+    "particles": "minecraft:block/nether_bricks"
   },
   "overrides": [
     {
       "predicate": {
-        "outvoted:blocking": 1
+        "outvoted:blocking": 1.0
       },
       "model": "outvoted:item/inferno_shield_blocking"
     }

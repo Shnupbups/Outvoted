@@ -1,6 +1,6 @@
 {
-  "parent": "item/shield_blocking",
+  "parent": "minecraft:item/shield_blocking",
   "textures": {
-    "particle": "block/diamond_block"
+    "particles": "minecraft:block/nether_bricks"
   }
 }
