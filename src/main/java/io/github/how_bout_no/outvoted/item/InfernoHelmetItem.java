@@ -39,6 +39,9 @@ public class InfernoHelmetItem extends ArmorItem {
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+        if (stack.getTag() != null && stack.getTag().getFloat("CustomModelData") == 1.0F) {
+            return "outvoted:textures/entity/inferno_soul.png";
+        }
         return "outvoted:textures/entity/inferno.png";
     }
 

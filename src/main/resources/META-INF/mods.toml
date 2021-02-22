@@ -20,15 +20,17 @@ displayURL="https://www.curseforge.com/minecraft/mc-mods/outvoted" #optional
 
 logoFile="logo.png" #optional
 
-credits="Curseforge Community, David2753/Lord_Noodal for contributions, Obi and Furti for textures" #optional
-
 authors="HowBoutNo" #optional
 
-description='Adds in mobs that got outvoted!'
+credits="Curseforge Community, Lord_Noodal for contributions, and Obi and Furti for textures" #optional
+
+description='''Adds in mobs that got outvoted!
+
+With generous support from TheMasterBlast_r'''
 #A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.outvoted]]
     modId="geckolib3"
     mandatory=true
-    versionRange="[3.0.0,)"
+    versionRange="[3.0.14,)"
     ordering="NONE"
     side="BOTH"

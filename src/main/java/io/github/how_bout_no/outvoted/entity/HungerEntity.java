@@ -27,7 +27,9 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.*;
@@ -46,6 +48,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class HungerEntity extends CreatureEntity implements IAnimatable {
     private static final DataParameter<Boolean> BURROWED = EntityDataManager.createKey(HungerEntity.class, DataSerializers.BOOLEAN);
@@ -60,30 +63,30 @@ public class HungerEntity extends CreatureEntity implements IAnimatable {
         String animname = event.getController().getCurrentAnimation() != null ? event.getController().getCurrentAnimation().animationName : "";
         if (this.isBurrowed()) {
             if (this.isEnchanting()) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.great_hunger.bite2").addAnimation("animation.great_hunger.bite2loop", true));
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("bite").addAnimation("biteloop", true));
             } else {
                 if (event.getController().getCurrentAnimation() != null) {
-                    if (animname.equals("animation.great_hunger.idle") || animname.equals("animation.great_hunger.attacking") || animname.equals("animation.great_hunger.bite") || animname.equals("animation.great_hunger.burrow")) {
-                        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.great_hunger.burrow").addAnimation("animation.great_hunger.burrow2", true));
+                    if (animname.equals("idle") || animname.equals("attacking") || animname.equals("chomp") || animname.equals("burrow")) {
+                        event.getController().setAnimation(new AnimationBuilder().addAnimation("burrow").addAnimation("burrowed", true));
                     } else {
-                        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.great_hunger.burrow2", true));
+                        event.getController().setAnimation(new AnimationBuilder().addAnimation("burrowed", true));
                     }
                 } else {
-                    event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.great_hunger.burrow").addAnimation("animation.great_hunger.burrow2", true));
+                    event.getController().setAnimation(new AnimationBuilder().addAnimation("burrow").addAnimation("burrowed", true));
                 }
             }
         } else {
-            if (event.getController().getCurrentAnimation() == null || animname.equals("animation.great_hunger.idle") || animname.equals("animation.great_hunger.attacking")) {
+            if (event.getController().getCurrentAnimation() == null || animname.equals("idle") || animname.equals("attacking")) {
                 if (this.isAttacking()) {
-                    event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.great_hunger.attacking"));
+                    event.getController().setAnimation(new AnimationBuilder().addAnimation("attacking"));
                 } else {
-                    event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.great_hunger.idle"));
+                    event.getController().setAnimation(new AnimationBuilder().addAnimation("idle"));
                 }
             } else {
                 if (this.isAttacking()) {
-                    event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.great_hunger.bite").addAnimation("animation.great_hunger.attacking"));
+                    event.getController().setAnimation(new AnimationBuilder().addAnimation("chomp").addAnimation("attacking"));
                 } else {
-                    event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.great_hunger.bite").addAnimation("animation.great_hunger.idle"));
+                    event.getController().setAnimation(new AnimationBuilder().addAnimation("chomp").addAnimation("idle"));
                 }
             }
         }
@@ -566,6 +569,22 @@ public class HungerEntity extends CreatureEntity implements IAnimatable {
         }
     }
 
+    /**
+     * Creates a vector based on caclulated direction of one of the 8 cardinal directions the entity is facing
+     *
+     * @return
+     */
+    private Vec3d directionVector() {
+        Vec3d vec3d = Vec3d.ZERO;
+        double rotation = this.rotationYaw - 180;
+        if (rotation < 0) rotation += 360;
+        int ordinal = MathHelper.floor(rotation / 45.0D + 0.5D) & 7;
+        for (Direction direction : Direction8.values()[ordinal].getDirections()) {
+            vec3d = vec3d.add(direction.getXOffset(), direction.getYOffset(), direction.getZOffset());
+        }
+        return vec3d;
+    }
+
     static class BurrowGoal extends Goal {
         private final HungerEntity hunger;
         private int tick = 0;
@@ -593,12 +612,13 @@ public class HungerEntity extends CreatureEntity implements IAnimatable {
         }
 
         public void tick() {
-            List<Entity> entities = this.hunger.world.getEntitiesWithinAABBExcludingEntity(this.hunger, this.hunger.getBoundingBox().expand(1.0D, 0.0D, 1.0D).expand(-1.0D, 0.0D, -1.0D));
+            Vec3d vec3d = this.hunger.directionVector().scale(0.6D);
+            AxisAlignedBB boundingBox = this.hunger.getBoundingBox().expand(vec3d).expand(vec3d.inverse());
+            List<Entity> entities = this.hunger.world.getEntitiesWithinAABBExcludingEntity(this.hunger, boundingBox);
             if (!entities.isEmpty()) {
                 if (!this.hunger.isAttacking() && !this.hunger.isEnchanting()) {
                     for (Entity entity : entities) {
-                        double d0 = this.hunger.getDistanceSq(entity);
-                        if (d0 < 1.1) {
+                        if (boundingBox.contains(entity.getPositionVec())) {
                             if (entity instanceof ItemEntity) {
                                 ItemStack item = ((ItemEntity) entity).getItem();
                                 if (((ItemEntity) entity).getThrowerId() != this.hunger.getUniqueID()) {

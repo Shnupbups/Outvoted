@@ -14,13 +14,11 @@ public class ModEntitySpawns {
         for (Biome biome : ForgeRegistries.BIOMES) {
             String biomename = biome.getRegistryName().toString();
             if (OutvotedConfig.COMMON.spawninferno.get()) {
-                if (OutvotedConfig.COMMON.restrictinferno.get()) {
-                    if (biomename.equals("minecraft:nether")) {
+                if (biome.getCategory() == Biome.Category.NETHER) {
+                    if (!OutvotedConfig.COMMON.restrictinferno.get()) {
                         biome.getSpawns(EntityClassification.MONSTER)
                                 .add(new Biome.SpawnListEntry(ModEntityTypes.INFERNO.get(), OutvotedConfig.COMMON.rateinferno.get(), 1, 1));
-                    }
-                } else {
-                    if (biome.getCategory() == Biome.Category.NETHER) {
+                    } else if (biomename.equals("minecraft:nether_wastes")) {
                         biome.getSpawns(EntityClassification.MONSTER)
                                 .add(new Biome.SpawnListEntry(ModEntityTypes.INFERNO.get(), OutvotedConfig.COMMON.rateinferno.get(), 1, 1));
                     }
@@ -34,7 +32,6 @@ public class ModEntitySpawns {
             }
             if (OutvotedConfig.COMMON.spawnkraken.get()) {
                 if (biome.getDepth() == -1.8F && !biomename.equals("minecraft:deep_frozen_ocean")) { // Possibly makes modded deep oceans compatible? (If those even exist, and use vanilla values)
-                    //if (biomename.equals("minecraft:deep_ocean") || biomename.equals("minecraft:deep_warm_ocean") || biomename.equals("minecraft:deep_lukewarm_ocean") || biomename.equals("minecraft:deep_cold_ocean")) {
                     biome.getSpawns(EntityClassification.WATER_CREATURE)
                             .add(new Biome.SpawnListEntry(ModEntityTypes.KRAKEN.get(), OutvotedConfig.COMMON.ratekraken.get(), 1, 1));
                 }

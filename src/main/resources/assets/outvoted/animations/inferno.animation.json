@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.inferno.generaltran": {
+		"generaltransition": {
 			"animation_length": 1,
 			"bones": {
 				"one": {
@@ -154,7 +154,7 @@
 				}
 			}
 		},
-		"animation.inferno.general": {
+		"general": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
@@ -283,7 +283,7 @@
 				}
 			}
 		},
-		"animation.inferno.shield": {
+		"shieldtransition": {
 			"animation_length": 1,
 			"bones": {
 				"one": {
@@ -424,7 +424,7 @@
 				}
 			}
 		},
-		"animation.inferno.shield2": {
+		"shielding": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
@@ -578,23 +578,23 @@
 				}
 			}
 		},
-		"animation.inferno.melee": {
-			"animation_length": 0.96,
+		"attack": {
+			"animation_length": 0.48,
 			"bones": {
 				"panels": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"0.16": {
+						"0.12": {
 							"vector": [0, -30, 0],
 							"easing": "easeOutQuad"
 						},
-						"0.8": {
+						"0.36": {
 							"vector": [0, -330, 0],
 							"easing": "easeOutQuad"
 						},
-						"0.96": {
+						"0.48": {
 							"vector": [0, -360, 0]
 						}
 					}
@@ -604,15 +604,15 @@
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"0.24": {
+						"0.12": {
 							"vector": [-60, 0, 0],
 							"easing": "easeInQuad"
 						},
-						"0.72": {
+						"0.36": {
 							"vector": [-60, 0, 0],
 							"easing": "easeInQuad"
 						},
-						"0.96": {
+						"0.48": {
 							"vector": [0, 0, 0]
 						}
 					},
@@ -620,15 +620,15 @@
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"0.24": {
+						"0.12": {
 							"vector": [8, -6, -8],
 							"easing": "easeInQuad"
 						},
-						"0.72": {
+						"0.36": {
 							"vector": [8, -6, -8],
 							"easing": "easeInQuad"
 						},
-						"0.96": {
+						"0.48": {
 							"vector": [0, 0, 0]
 						}
 					}
@@ -638,15 +638,15 @@
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"0.24": {
+						"0.12": {
 							"vector": [-60, 0, 0],
 							"easing": "easeInQuad"
 						},
-						"0.72": {
+						"0.36": {
 							"vector": [-60, 0, 0],
 							"easing": "easeInQuad"
 						},
-						"0.96": {
+						"0.48": {
 							"vector": [0, 0, 0]
 						}
 					},
@@ -654,15 +654,15 @@
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"0.24": {
+						"0.12": {
 							"vector": [8, -6, 8],
 							"easing": "easeInQuad"
 						},
-						"0.72": {
+						"0.36": {
 							"vector": [8, -6, 8],
 							"easing": "easeInQuad"
 						},
-						"0.96": {
+						"0.48": {
 							"vector": [0, 0, 0]
 						}
 					}
@@ -672,15 +672,15 @@
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"0.24": {
+						"0.12": {
 							"vector": [-60, 0, 0],
 							"easing": "easeInQuad"
 						},
-						"0.72": {
+						"0.36": {
 							"vector": [-60, 0, 0],
 							"easing": "easeInQuad"
 						},
-						"0.96": {
+						"0.48": {
 							"vector": [0, 0, 0]
 						}
 					},
@@ -688,15 +688,15 @@
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"0.24": {
+						"0.12": {
 							"vector": [-8, -6, -8],
 							"easing": "easeInQuad"
 						},
-						"0.72": {
+						"0.36": {
 							"vector": [-8, -6, -8],
 							"easing": "easeInQuad"
 						},
-						"0.96": {
+						"0.48": {
 							"vector": [0, 0, 0]
 						}
 					}
@@ -706,15 +706,15 @@
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"0.24": {
+						"0.12": {
 							"vector": [-60, 0, 0],
 							"easing": "easeInQuad"
 						},
-						"0.72": {
+						"0.36": {
 							"vector": [-60, 0, 0],
 							"easing": "easeInQuad"
 						},
-						"0.96": {
+						"0.48": {
 							"vector": [0, 0, 0]
 						}
 					},
@@ -722,15 +722,15 @@
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"0.24": {
+						"0.12": {
 							"vector": [-8, -6, 8],
 							"easing": "easeInQuad"
 						},
-						"0.72": {
+						"0.36": {
 							"vector": [-8, -6, 8],
 							"easing": "easeInQuad"
 						},
-						"0.96": {
+						"0.48": {
 							"vector": [0, 0, 0]
 						}
 					}
@@ -744,11 +744,11 @@
 							"vector": [0, 30, 0],
 							"easing": "linear"
 						},
-						"0.84": {
+						"0.36": {
 							"vector": [0, 330, 0],
 							"easing": "linear"
 						},
-						"0.96": {
+						"0.48": {
 							"vector": [0, 360, 0]
 						}
 					},
@@ -756,10 +756,10 @@
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"0.48": {
+						"0.24": {
 							"vector": [0, 1.5, 0]
 						},
-						"0.96": {
+						"0.48": {
 							"vector": [0, 0, 0]
 						}
 					}
