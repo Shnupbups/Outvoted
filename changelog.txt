@@ -1,0 +1,31 @@
+Inferno (Thanks to Lord_Noodal for most of these!)
+- Now has an attack animation
+- Inferno no longer shoots fireballs in a circle, instead angles a configurable amount towards its target
+- Inferno is only invulnerable when its shield transition is done
+- Fixed bug where shield would not be disabled on critical axe hit
+- Fireballs can be configured to explode (obviously disabled by default)
+- More configuration to its attacks
+
+Hunger
+- Slightly altered animations
+- Slightly increased hitbox size
+- New hitbox detection method for items and entities (careful! - will now detect entities along its entire mouth instead of just the center)
+- Fix janky animations
+- Fixed crash on server
+
+Kraken
+- Removed damage penalty for water breathing, instead just applies normal drowning damage
+- Buffed pull speed
+- Animations have been adjusted, tongue now attaches to player
+- Marginally increased hitbox size
+- Fix texture issues maybe
+
+Inferno Shield
+- Fix not setting deflected arrow on fire
+
+Inferno Helmet
+- Now has a different texture depending on which Inferno variant dropped it (is not affected by config)
+
+Misc
+- Blaze Renderer Mixin won't try to load on the server anymore
+- Beta Patchouli support which is mostly a direct implementation of the wiki, but with more detail
