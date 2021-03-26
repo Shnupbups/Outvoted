@@ -5,10 +5,10 @@
       "item": "minecraft:shield"
     },
     {
-      "item": "outvoted:inferno_shield_part"
+      "item": "outvoted:wildfire_shield_part"
     }
   ],
   "result": {
-    "item": "outvoted:inferno_shield"
+    "item": "outvoted:wildfire_shield"
   }
 }

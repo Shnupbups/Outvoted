@@ -17,7 +17,7 @@ public class ModelHandler {
     @SubscribeEvent
     public static void onModelBake(ModelBakeEvent e) {
         final Map<ResourceLocation, IBakedModel> registry = e.getModelRegistry();
-        replaceShieldModel(registry, "inferno");
+        replaceShieldModel(registry, "wildfire");
     }
 
     private static void replaceShieldModel(Map<ResourceLocation, IBakedModel> registry, String material) {

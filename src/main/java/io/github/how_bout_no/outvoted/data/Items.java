@@ -30,10 +30,10 @@ public class Items extends ItemModelProvider {
             }
         });
 
-        singleTexture(ModItems.INFERNO_HELMET.get().getRegistryName().getPath(), new ResourceLocation("item/generated"),
-                "layer0", new ResourceLocation(Outvoted.MOD_ID, "items/" + ModItems.INFERNO_HELMET.get().getRegistryName().getPath()));
+        singleTexture(ModItems.WILDFIRE_HELMET.get().getRegistryName().getPath(), new ResourceLocation("item/generated"),
+                "layer0", new ResourceLocation(Outvoted.MOD_ID, "items/" + ModItems.WILDFIRE_HELMET.get().getRegistryName().getPath()));
 
-        singleTexture(ModItems.INFERNO_SHIELD.get().getRegistryName().getPath(), new ResourceLocation("item/shield"),
+        singleTexture(ModItems.WILDFIRE_SHIELD.get().getRegistryName().getPath(), new ResourceLocation("item/shield"),
                 "particles", new ResourceLocation("block/nether_bricks"))
                 .override().predicate(new ResourceLocation(Outvoted.MOD_ID, "blocking"), 1)
                 .model(new ModelFile(new ResourceLocation(Outvoted.MOD_ID, "item/inferno_shield_blocking")) {
@@ -43,7 +43,7 @@ public class Items extends ItemModelProvider {
                     }
                 });
 
-        singleTexture(ModItems.INFERNO_SHIELD.get().getRegistryName().getPath() + "_blocking", new ResourceLocation("item/shield_blocking"),
+        singleTexture(ModItems.WILDFIRE_SHIELD.get().getRegistryName().getPath() + "_blocking", new ResourceLocation("item/shield_blocking"),
                 "particles", new ResourceLocation("block/nether_bricks"));
     }
 }

@@ -2,6 +2,7 @@ package io.github.how_bout_no.outvoted.entity;
 
 import io.github.how_bout_no.outvoted.config.OutvotedConfig;
 import io.github.how_bout_no.outvoted.init.ModSounds;
+import io.github.how_bout_no.outvoted.util.EntityUtils;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.controller.LookController;
 import net.minecraft.entity.ai.controller.MovementController;
@@ -53,6 +54,7 @@ public class KrakenEntity extends MonsterEntity implements IAnimatable {
         this.experienceValue = 10;
         this.setPathPriority(PathNodeType.WATER, 0.0F);
         this.moveController = new KrakenEntity.MoveHelperController(this);
+        EntityUtils.setConfigHealth(this, OutvotedConfig.COMMON.healthkraken.get());
     }
 
     private AnimationFactory factory = new AnimationFactory(this);
@@ -83,7 +85,6 @@ public class KrakenEntity extends MonsterEntity implements IAnimatable {
     protected void registerAttributes() {
         super.registerAttributes();
         this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
-        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(OutvotedConfig.COMMON.healthkraken.get());
         this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.1D);
         this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(48.0D);
     }
@@ -233,18 +234,6 @@ public class KrakenEntity extends MonsterEntity implements IAnimatable {
         super.onDeath(cause);
     }
 
-    /**
-     * Constructs a knockback vector from the given direction ratio and magnitude and adds it to the entity's velocity.
-     * If it is on the ground (i.e. {@code this.onGround}), the Y-velocity is increased as well, clamping it to {@code
-     * .4}.
-     * <p>
-     * The entity's existing horizontal velocity is halved, and if the entity is on the ground the Y-velocity is too.
-     *
-     * @param entityIn
-     * @param strength
-     * @param xRatio
-     * @param zRatio
-     */
     @Override
     public void knockBack(Entity entityIn, float strength, double xRatio, double zRatio) {
         super.knockBack(entityIn, strength / 4, xRatio, zRatio);

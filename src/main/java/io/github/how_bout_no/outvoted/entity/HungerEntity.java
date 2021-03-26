@@ -6,6 +6,8 @@ import io.github.how_bout_no.outvoted.config.OutvotedConfig;
 import io.github.how_bout_no.outvoted.init.ModItems;
 import io.github.how_bout_no.outvoted.init.ModSounds;
 import io.github.how_bout_no.outvoted.init.ModTags;
+import io.github.how_bout_no.outvoted.util.EntityUtils;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.*;
@@ -27,11 +29,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.*;
 import net.minecraft.world.*;
 import org.apache.commons.lang3.tuple.MutablePair;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -48,7 +46,6 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 public class HungerEntity extends CreatureEntity implements IAnimatable {
     private static final DataParameter<Boolean> BURROWED = EntityDataManager.createKey(HungerEntity.class, DataSerializers.BOOLEAN);
@@ -132,14 +129,13 @@ public class HungerEntity extends CreatureEntity implements IAnimatable {
     public HungerEntity(EntityType<? extends CreatureEntity> type, World worldIn) {
         super(type, worldIn);
         this.experienceValue = 5;
+        EntityUtils.setConfigHealth(this, OutvotedConfig.COMMON.healthhunger.get());
     }
 
     protected void registerAttributes() {
         super.registerAttributes();
         this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(19.0D);
-        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(OutvotedConfig.COMMON.healthhunger.get());
         this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-        this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(15.0D);
     }
 
     protected void registerGoals() {
@@ -153,7 +149,7 @@ public class HungerEntity extends CreatureEntity implements IAnimatable {
     }
 
     public static boolean canSpawn(EntityType<HungerEntity> entity, IWorld world, SpawnReason spawnReason, BlockPos blockPos, Random random) {
-        return world.canBlockSeeSky(blockPos);
+        return world.canBlockSeeSky(blockPos) && canSpawnOn(entity, world, spawnReason, blockPos, random) && world.getBlockState(blockPos.down()).isIn(ModTags.HUNGER_CAN_BURROW);
     }
 
     protected SoundEvent getAmbientSound() {
@@ -197,9 +193,10 @@ public class HungerEntity extends CreatureEntity implements IAnimatable {
     @Nullable
     public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
         int type;
-        if (Outvoted.matchesBlock(this.world.getBlockState(this.getPositionUnderneath()).getBlock(), Blocks.SAND)) {
+        Block block = worldIn.getBlockState(this.getPositionUnderneath()).getBlock();
+        if (Outvoted.matchesBlock(block, Blocks.SAND)) {
             type = 0;
-        } else if (Outvoted.matchesBlock(this.world.getBlockState(this.getPositionUnderneath()).getBlock(), Blocks.RED_SAND)) {
+        } else if (Outvoted.matchesBlock(block, Blocks.RED_SAND)) {
             type = 1;
         } else {
             type = 2;
@@ -538,7 +535,7 @@ public class HungerEntity extends CreatureEntity implements IAnimatable {
 
             for (int i = 0; i < 10; ++i) {
                 BlockPos blockpos1 = blockpos.add(random.nextInt(20) - 10, random.nextInt(6) - 3, random.nextInt(20) - 10);
-                if (this.hunger.isSuitable(this.hunger, blockpos1)) {
+                if (this.hunger.isSuitable(this.hunger, blockpos1) && this.hunger.getBlockPathWeight(blockpos1) < 0.0F) {
                     return copyCenteredHorizontally(blockpos1);
                 }
             }

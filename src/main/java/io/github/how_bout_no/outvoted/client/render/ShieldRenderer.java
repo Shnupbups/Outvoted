@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ShieldRenderer extends ItemStackTileEntityRenderer {
 
     private final ShieldModel modelShield = new ShieldModel();
-    public static final Material base = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, new ResourceLocation(Outvoted.MOD_ID, "entity/inferno_shield_base"));
+    public static final Material base = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, new ResourceLocation(Outvoted.MOD_ID, "entity/wildfire_shield_base"));
 
     public void render(ItemStack itemStackIn, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
         matrixStackIn.push();

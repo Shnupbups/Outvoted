@@ -3,11 +3,16 @@ import groovy.json.JsonOutput
 
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
-        mavenCentral()
-        maven {url='https://dist.creeper.host/Sponge/maven'}
+        maven {
+            name "Forge"
+            url "https://files.minecraftforge.net/maven"
+        }
+        maven {
+            name "Sponge"
+            url "https://repo.spongepowered.org/repository/maven-public/"
+        }
         maven { url  = 'https://plugins.gradle.org/m2/' }
+        mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
@@ -178,7 +183,6 @@ if (file("key.properties").exists()) {
             changelog = file('changelog.txt')
             addGameVersion("1.15.2")
             addGameVersion("Forge")
-            addGameVersion("Java 8")
 
             mainArtifact(jar) {
                 displayName = "Outvoted-${minecraft_version}-${mod_version}"

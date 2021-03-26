@@ -19,18 +19,18 @@ public class Recipes extends RecipeProvider {
 
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-        ShapelessBuilder.shapelessRecipe(ModItems.INFERNO_SHIELD.get())
+        ShapelessBuilder.shapelessRecipe(ModItems.WILDFIRE_SHIELD.get())
                 .addIngredient(Items.SHIELD)
-                .addIngredient(ModItems.INFERNO_SHIELD_PART.get())
-                .addCriterion("has_shield_part", hasItem(ModItems.INFERNO_SHIELD_PART.get()))
+                .addIngredient(ModItems.WILDFIRE_SHIELD_PART.get())
+                .addCriterion("has_shield_part", hasItem(ModItems.WILDFIRE_SHIELD_PART.get()))
                 .build(consumer);
-        ShapedBuilder.shapedRecipe(ModItems.INFERNO_SHIELD_PART.get())
+        ShapedBuilder.shapedRecipe(ModItems.WILDFIRE_SHIELD_PART.get())
                 .patternLine("MMM")
                 .patternLine("MCM")
                 .patternLine("MMM")
                 .key('M', Blocks.NETHER_BRICKS)
-                .key('C', ModItems.INFERNO_PIECE.get())
-                .addCriterion("has_inferno_piece", hasItem(ModItems.INFERNO_PIECE.get()))
+                .key('C', ModItems.WILDFIRE_PIECE.get())
+                .addCriterion("has_wildfire_piece", hasItem(ModItems.WILDFIRE_PIECE.get()))
                 .build(consumer);
         ShapedBuilder.shapedRecipe(ModItems.PRISMARINE_ROD.get())
                 .patternLine("P")

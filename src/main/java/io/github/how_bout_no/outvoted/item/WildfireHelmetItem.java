@@ -1,48 +1,32 @@
 package io.github.how_bout_no.outvoted.item;
 
 import io.github.how_bout_no.outvoted.Outvoted;
-import io.github.how_bout_no.outvoted.client.model.InfernoHelmetModel;
-import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.item.GeoArmorItem;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class InfernoHelmetItem extends ArmorItem {
+public class WildfireHelmetItem extends GeoArmorItem implements IAnimatable {
     private int timer = 0;
 //    private boolean timer = true;
 
-    public InfernoHelmetItem() {
-        super(ModArmor.INFERNO, EquipmentSlotType.HEAD, new Item.Properties().group(Outvoted.TAB_COMBAT));
-    }
+    private AnimationFactory factory = new AnimationFactory(this);
 
-    @SuppressWarnings("unchecked")
-    @OnlyIn(Dist.CLIENT)
-    public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A _default) {
-        return (A) new InfernoHelmetModel<LivingEntity>();
-    }
-
-
-    @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-        if (stack.getTag() != null && stack.getTag().getFloat("CustomModelData") == 1.0F) {
-            return "outvoted:textures/entity/inferno_soul.png";
-        }
-        return "outvoted:textures/entity/inferno.png";
+    public WildfireHelmetItem() {
+        super(ModArmor.WILDFIRE, EquipmentSlotType.HEAD, new Item.Properties().group(Outvoted.TAB_COMBAT));
     }
 
     @Override
@@ -57,7 +41,7 @@ public class InfernoHelmetItem extends ArmorItem {
         } else {
             timer = 0;
         }
-        /*if (player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == ModItems.INFERNO_HELMET.get() && player.isBurning() && !player.isCreative()) {
+        /*if (player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() == ModItems.WILDFIRE_HELMET.get() && player.isBurning() && !player.isCreative()) {
             if (timer) {
                 player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 400, 0, false, false, true));
                 timer = false;
@@ -85,5 +69,14 @@ public class InfernoHelmetItem extends ArmorItem {
     @Override
     public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
         return !EnchantmentHelper.getEnchantments(book).containsKey(Enchantments.MENDING);
+    }
+
+    @Override
+    public void registerControllers(AnimationData animationData) {
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return this.factory;
     }
 }
