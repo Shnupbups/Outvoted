@@ -3,13 +3,11 @@ package io.github.how_bout_no.outvoted.init;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import io.github.how_bout_no.outvoted.Outvoted;
-import io.github.how_bout_no.outvoted.block.BurrowBlock;
+import io.github.how_bout_no.outvoted.block.*;
 import io.github.how_bout_no.outvoted.block.ModBlockItems.ModBlockItem;
 import io.github.how_bout_no.outvoted.block.ModBlockItems.ModDecoBlockItem;
 import io.github.how_bout_no.outvoted.block.ModBlockItems.ModSignItem;
 import io.github.how_bout_no.outvoted.block.ModBlockItems.ModTallBlockItem;
-import io.github.how_bout_no.outvoted.block.ModReplaceBlocks;
-import io.github.how_bout_no.outvoted.block.ModSaplingBlock;
 import io.github.how_bout_no.outvoted.block.trees.BaobabTree;
 import io.github.how_bout_no.outvoted.block.trees.PalmTree;
 import net.minecraft.block.*;
@@ -27,7 +25,7 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> BURROW = BLOCKS.register("burrow", () -> new BurrowBlock(Block.Settings.copy(Blocks.SAND)));
 
     public static final RegistrySupplier<Block> PALM_PLANKS = BLOCKS.register("palm_planks", () -> new Block(Block.Settings.copy(Blocks.JUNGLE_PLANKS)));
-    public static final RegistrySupplier<Block> PALM_LOG = BLOCKS.register("palm_log", () -> new PillarBlock(Block.Settings.copy(Blocks.JUNGLE_LOG)));
+    public static final RegistrySupplier<Block> PALM_LOG = BLOCKS.register("palm_log", () -> createLogBlock(MapColor.DIRT_BROWN, MapColor.SPRUCE_BROWN));
     public static final RegistrySupplier<Block> PALM_LEAVES = BLOCKS.register("palm_leaves", () -> new LeavesBlock(Block.Settings.copy(Blocks.JUNGLE_LEAVES)));
     public static final RegistrySupplier<Block> PALM_SAPLING = BLOCKS.register("palm_sapling", () -> new ModSaplingBlock(new PalmTree(), Block.Settings.copy(Blocks.JUNGLE_SAPLING), BlockTags.SAND));
     public static final RegistrySupplier<Block> PALM_WOOD = BLOCKS.register("palm_wood", () -> new PillarBlock(Block.Settings.copy(Blocks.JUNGLE_WOOD)));
@@ -61,6 +59,24 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> BAOBAB_DOOR = BLOCKS.register("baobab_door", () -> new ModReplaceBlocks.Door(Block.Settings.copy(Blocks.ACACIA_DOOR)));
     public static final RegistrySupplier<Block> BAOBAB_SIGN = BLOCKS.register("baobab_sign", () -> new SignBlock(Block.Settings.copy(Blocks.ACACIA_SIGN), ModSignType.BAOBAB));
     public static final RegistrySupplier<Block> BAOBAB_WALL_SIGN = BLOCKS.register("baobab_wall_sign", () -> new WallSignBlock(Block.Settings.copy(Blocks.ACACIA_WALL_SIGN), ModSignType.BAOBAB));
+
+    public static final RegistrySupplier<Block> HOLLOW_OAK_LOG = BLOCKS.register("hollow_oak_log", () -> createHollowLogBlock(MapColor.OAK_TAN, MapColor.SPRUCE_BROWN));
+    public static final RegistrySupplier<Block> HOLLOW_SPRUCE_LOG = BLOCKS.register("hollow_spruce_log", () -> createHollowLogBlock(MapColor.SPRUCE_BROWN, MapColor.BROWN));
+    public static final RegistrySupplier<Block> HOLLOW_BIRCH_LOG = BLOCKS.register("hollow_birch_log", () -> createHollowLogBlock(MapColor.PALE_YELLOW, MapColor.OFF_WHITE));
+    public static final RegistrySupplier<Block> HOLLOW_JUNGLE_LOG = BLOCKS.register("hollow_jungle_log", () -> createHollowLogBlock(MapColor.DIRT_BROWN, MapColor.SPRUCE_BROWN));
+    public static final RegistrySupplier<Block> HOLLOW_ACACIA_LOG = BLOCKS.register("hollow_acacia_log", () -> createHollowLogBlock(MapColor.ORANGE, MapColor.STONE_GRAY));
+    public static final RegistrySupplier<Block> HOLLOW_DARK_OAK_LOG = BLOCKS.register("hollow_dark_oak_log", () -> createHollowLogBlock(MapColor.BROWN, MapColor.BROWN));
+    public static final RegistrySupplier<Block> HOLLOW_PALM_LOG = BLOCKS.register("hollow_palm_log", () -> createHollowLogBlock(MapColor.DIRT_BROWN, MapColor.SPRUCE_BROWN));
+    public static final RegistrySupplier<Block> HOLLOW_BAOBAB_LOG = BLOCKS.register("hollow_baobab_log", () -> createHollowLogBlock(MapColor.ORANGE, MapColor.STONE_GRAY));
+
+    public static final RegistrySupplier<Block> INFESTED_OAK_LOG = BLOCKS.register("infested_oak_log", () -> createInfestedLogBlock(Blocks.OAK_LOG, HOLLOW_OAK_LOG.get(), MapColor.OAK_TAN, MapColor.SPRUCE_BROWN));
+    public static final RegistrySupplier<Block> INFESTED_SPRUCE_LOG = BLOCKS.register("infested_spruce_log", () -> createInfestedLogBlock(Blocks.SPRUCE_LOG, HOLLOW_SPRUCE_LOG.get(), MapColor.SPRUCE_BROWN, MapColor.BROWN));
+    public static final RegistrySupplier<Block> INFESTED_BIRCH_LOG = BLOCKS.register("infested_birch_log", () -> createInfestedLogBlock(Blocks.BIRCH_LOG, HOLLOW_BIRCH_LOG.get(), MapColor.PALE_YELLOW, MapColor.OFF_WHITE));
+    public static final RegistrySupplier<Block> INFESTED_JUNGLE_LOG = BLOCKS.register("infested_jungle_log", () -> createInfestedLogBlock(Blocks.JUNGLE_LOG, HOLLOW_JUNGLE_LOG.get(), MapColor.DIRT_BROWN, MapColor.SPRUCE_BROWN));
+    public static final RegistrySupplier<Block> INFESTED_ACACIA_LOG = BLOCKS.register("infested_acacia_log", () -> createInfestedLogBlock(Blocks.ACACIA_LOG, HOLLOW_ACACIA_LOG.get(), MapColor.ORANGE, MapColor.STONE_GRAY));
+    public static final RegistrySupplier<Block> INFESTED_DARK_OAK_LOG = BLOCKS.register("infested_dark_oak_log", () -> createInfestedLogBlock(Blocks.DARK_OAK_LOG, HOLLOW_DARK_OAK_LOG.get(), MapColor.BROWN, MapColor.BROWN));
+    public static final RegistrySupplier<Block> INFESTED_PALM_LOG = BLOCKS.register("infested_palm_log", () -> createInfestedLogBlock(PALM_LOG.get(), HOLLOW_PALM_LOG.get(), MapColor.DIRT_BROWN, MapColor.SPRUCE_BROWN));
+    public static final RegistrySupplier<Block> INFESTED_BAOBAB_LOG = BLOCKS.register("infested_baobab_log", () -> createInfestedLogBlock(BAOBAB_LOG.get(), HOLLOW_BAOBAB_LOG.get(), MapColor.ORANGE, MapColor.STONE_GRAY));
 
     // Block items
     public static final RegistrySupplier<Item> BURROW_ITEM = BLOCK_ITEMS.register("burrow", () -> new ModBlockItem(BURROW.get(), new Item.Settings()));
@@ -99,8 +115,38 @@ public class ModBlocks {
     public static final RegistrySupplier<Item> BAOBAB_DOOR_ITEM = BLOCK_ITEMS.register("baobab_door", () -> new ModTallBlockItem(BAOBAB_DOOR.get(), new Item.Settings()));
     public static final RegistrySupplier<Item> BAOBAB_SIGN_ITEM = BLOCK_ITEMS.register("baobab_sign", () -> new ModSignItem(new Item.Settings(), BAOBAB_SIGN.get(), BAOBAB_WALL_SIGN.get()));
 
+    public static final RegistrySupplier<Item> HOLLOW_OAK_LOG_ITEM = BLOCK_ITEMS.register("hollow_oak_log", () -> new ModBlockItem(HOLLOW_OAK_LOG.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> HOLLOW_SPRUCE_LOG_ITEM = BLOCK_ITEMS.register("hollow_spruce_log", () -> new ModBlockItem(HOLLOW_SPRUCE_LOG.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> HOLLOW_BIRCH_LOG_ITEM = BLOCK_ITEMS.register("hollow_birch_log", () -> new ModBlockItem(HOLLOW_BIRCH_LOG.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> HOLLOW_JUNGLE_LOG_ITEM = BLOCK_ITEMS.register("hollow_jungle_log", () -> new ModBlockItem(HOLLOW_JUNGLE_LOG.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> HOLLOW_ACACIA_LOG_ITEM = BLOCK_ITEMS.register("hollow_acacia_log", () -> new ModBlockItem(HOLLOW_ACACIA_LOG.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> HOLLOW_DARK_OAK_LOG_ITEM = BLOCK_ITEMS.register("hollow_dark_oak_log", () -> new ModBlockItem(HOLLOW_DARK_OAK_LOG.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> HOLLOW_PALM_LOG_ITEM = BLOCK_ITEMS.register("hollow_palm_log", () -> new ModBlockItem(HOLLOW_PALM_LOG.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> HOLLOW_BAOBAB_LOG_ITEM = BLOCK_ITEMS.register("hollow_baobab_log", () -> new ModBlockItem(HOLLOW_BAOBAB_LOG.get(), new Item.Settings()));
+
+    public static final RegistrySupplier<Item> INFESTED_OAK_LOG_ITEM = BLOCK_ITEMS.register("infested_oak_log", () -> new ModBlockItem(INFESTED_OAK_LOG.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> INFESTED_SPRUCE_LOG_ITEM = BLOCK_ITEMS.register("infested_spruce_log", () -> new ModBlockItem(INFESTED_SPRUCE_LOG.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> INFESTED_BIRCH_LOG_ITEM = BLOCK_ITEMS.register("infested_birch_log", () -> new ModBlockItem(INFESTED_BIRCH_LOG.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> INFESTED_JUNGLE_LOG_ITEM = BLOCK_ITEMS.register("infested_jungle_log", () -> new ModBlockItem(INFESTED_JUNGLE_LOG.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> INFESTED_ACACIA_LOG_ITEM = BLOCK_ITEMS.register("infested_acacia_log", () -> new ModBlockItem(INFESTED_ACACIA_LOG.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> INFESTED_DARK_OAK_LOG_ITEM = BLOCK_ITEMS.register("infested_dark_oak_log", () -> new ModBlockItem(INFESTED_DARK_OAK_LOG.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> INFESTED_PALM_LOG_ITEM = BLOCK_ITEMS.register("infested_palm_log", () -> new ModBlockItem(INFESTED_PALM_LOG.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> INFESTED_BAOBAB_LOG_ITEM = BLOCK_ITEMS.register("infested_baobab_log", () -> new ModBlockItem(INFESTED_BAOBAB_LOG.get(), new Item.Settings()));
+
     private static PillarBlock createLogBlock(MapColor topColor, MapColor barkColor) {
         return new PillarBlock(AbstractBlock.Settings.of(Material.WOOD, (state) -> {
+            return state.get(PillarBlock.AXIS) == Direction.Axis.Y ? topColor : barkColor;
+        }).strength(2.0F).sounds(BlockSoundGroup.WOOD));
+    }
+
+    private static HollowLogBlock createHollowLogBlock(MapColor topColor, MapColor barkColor) {
+        return new HollowLogBlock(AbstractBlock.Settings.of(Material.WOOD, (state) -> {
+            return state.get(PillarBlock.AXIS) == Direction.Axis.Y ? topColor : barkColor;
+        }).strength(1.0F, 0.75F).sounds(BlockSoundGroup.WOOD));
+    }
+
+    private static InfestedLogBlock createInfestedLogBlock(Block regularLog, Block hollowLog, MapColor topColor, MapColor barkColor) {
+        return new InfestedLogBlock(regularLog, hollowLog, AbstractBlock.Settings.of(Material.WOOD, (state) -> {
             return state.get(PillarBlock.AXIS) == Direction.Axis.Y ? topColor : barkColor;
         }).strength(2.0F).sounds(BlockSoundGroup.WOOD));
     }

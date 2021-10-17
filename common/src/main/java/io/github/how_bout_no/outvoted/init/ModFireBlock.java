@@ -26,5 +26,21 @@ public class ModFireBlock {
         fireblock.registerFlammableBlock(ModBlocks.BAOBAB_FENCE.get(), 5, 20);
         fireblock.registerFlammableBlock(ModBlocks.BAOBAB_FENCE_GATE.get(), 5, 20);
         fireblock.registerFlammableBlock(ModBlocks.BAOBAB_LEAVES.get(), 30, 60);
+        fireblock.registerFlammableBlock(ModBlocks.HOLLOW_OAK_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.HOLLOW_SPRUCE_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.HOLLOW_BIRCH_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.HOLLOW_JUNGLE_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.HOLLOW_ACACIA_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.HOLLOW_DARK_OAK_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.HOLLOW_PALM_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.HOLLOW_BAOBAB_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.INFESTED_OAK_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.INFESTED_SPRUCE_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.INFESTED_BIRCH_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.INFESTED_JUNGLE_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.INFESTED_ACACIA_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.INFESTED_DARK_OAK_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.INFESTED_PALM_LOG.get(), 5, 5);
+        fireblock.registerFlammableBlock(ModBlocks.INFESTED_BAOBAB_LOG.get(), 5, 5);
     }
 }
