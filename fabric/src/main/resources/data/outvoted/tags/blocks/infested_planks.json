@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "outvoted:infested_oak_planks",
+    "outvoted:infested_spruce_planks",
+    "outvoted:infested_birch_planks",
+    "outvoted:infested_jungle_planks",
+    "outvoted:infested_acacia_planks",
+    "outvoted:infested_dark_oak_planks",
+    "outvoted:infested_palm_planks",
+    "outvoted:infested_baobab_planks"
+  ]
+}

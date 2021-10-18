@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "outvoted:unstable_oak_planks",
+    "outvoted:unstable_spruce_planks",
+    "outvoted:unstable_birch_planks",
+    "outvoted:unstable_jungle_planks",
+    "outvoted:unstable_acacia_planks",
+    "outvoted:unstable_dark_oak_planks",
+    "outvoted:unstable_palm_planks",
+    "outvoted:unstable_baobab_planks"
+  ]
+}

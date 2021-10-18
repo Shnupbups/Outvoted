@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#outvoted:infested_logs",
+    "#outvoted:infested_planks"
+  ]
+}

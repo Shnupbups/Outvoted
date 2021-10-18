@@ -3,7 +3,6 @@ package io.github.how_bout_no.outvoted.block;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.PillarBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
@@ -16,18 +15,18 @@ import net.minecraft.world.explosion.Explosion;
 import java.util.Map;
 import java.util.Random;
 
-public class InfestedLogBlock extends PillarBlock implements TermiteInfested {
-    private final Block regularLog;
-    private final Block hollowLog;
+public class InfestedPlanksBlock extends Block implements TermiteInfested {
+    private final Block regularPlanks;
+    private final Block unstablePlanks;
     private static final Map<BlockState, BlockState> REGULAR_TO_INFESTED_STATE = Maps.newIdentityHashMap();
     private static final Map<BlockState, BlockState> INFESTED_TO_REGULAR_STATE = Maps.newIdentityHashMap();
-    private static final Map<BlockState, BlockState> INFESTED_TO_HOLLOW_STATE = Maps.newIdentityHashMap();
+    private static final Map<BlockState, BlockState> INFESTED_TO_UNSTABLE_STATE = Maps.newIdentityHashMap();
 
-    public InfestedLogBlock(Block regularLog, Block hollowLog, Settings settings) {
-        super(settings.strength(regularLog.getHardness() / 2.0F, 0.75F));
-        this.regularLog = regularLog;
-        this.hollowLog = hollowLog;
-        REGULAR_TO_INFESTED_BLOCK.put(regularLog, this);
+    public InfestedPlanksBlock(Block regularPlanks, Block unstablePlanks, Settings settings) {
+        super(settings.strength(regularPlanks.getHardness() / 2.0F, 0.75F));
+        this.regularPlanks = regularPlanks;
+        this.unstablePlanks = unstablePlanks;
+        REGULAR_TO_INFESTED_BLOCK.put(regularPlanks, this);
     }
 
     @Override
@@ -58,12 +57,12 @@ public class InfestedLogBlock extends PillarBlock implements TermiteInfested {
 
     @Override
     public Block getRegularBlock() {
-        return regularLog;
+        return regularPlanks;
     }
 
     @Override
     public Block getEatenBlock() {
-        return hollowLog;
+        return unstablePlanks;
     }
 
     @Override
@@ -73,7 +72,7 @@ public class InfestedLogBlock extends PillarBlock implements TermiteInfested {
 
     @Override
     public Map<BlockState, BlockState> getInfestedToEatenStateMap() {
-        return INFESTED_TO_HOLLOW_STATE;
+        return INFESTED_TO_UNSTABLE_STATE;
     }
 
     @Override

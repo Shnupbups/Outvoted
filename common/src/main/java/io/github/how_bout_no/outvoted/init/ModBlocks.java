@@ -78,6 +78,24 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> INFESTED_PALM_LOG = BLOCKS.register("infested_palm_log", () -> createInfestedLogBlock(PALM_LOG.get(), HOLLOW_PALM_LOG.get(), MapColor.DIRT_BROWN, MapColor.SPRUCE_BROWN));
     public static final RegistrySupplier<Block> INFESTED_BAOBAB_LOG = BLOCKS.register("infested_baobab_log", () -> createInfestedLogBlock(BAOBAB_LOG.get(), HOLLOW_BAOBAB_LOG.get(), MapColor.ORANGE, MapColor.STONE_GRAY));
 
+    public static final RegistrySupplier<Block> UNSTABLE_OAK_PLANKS = BLOCKS.register("unstable_oak_planks", () -> new UnstablePlanksBlock(AbstractBlock.Settings.copy(Blocks.OAK_PLANKS)));
+    public static final RegistrySupplier<Block> UNSTABLE_SPRUCE_PLANKS = BLOCKS.register("unstable_spruce_planks", () -> new UnstablePlanksBlock(AbstractBlock.Settings.copy(Blocks.SPRUCE_PLANKS)));
+    public static final RegistrySupplier<Block> UNSTABLE_BIRCH_PLANKS = BLOCKS.register("unstable_birch_planks", () -> new UnstablePlanksBlock(AbstractBlock.Settings.copy(Blocks.BIRCH_PLANKS)));
+    public static final RegistrySupplier<Block> UNSTABLE_JUNGLE_PLANKS = BLOCKS.register("unstable_jungle_planks", () -> new UnstablePlanksBlock(AbstractBlock.Settings.copy(Blocks.JUNGLE_PLANKS)));
+    public static final RegistrySupplier<Block> UNSTABLE_ACACIA_PLANKS = BLOCKS.register("unstable_acacia_planks", () -> new UnstablePlanksBlock(AbstractBlock.Settings.copy(Blocks.ACACIA_PLANKS)));
+    public static final RegistrySupplier<Block> UNSTABLE_DARK_OAK_PLANKS = BLOCKS.register("unstable_dark_oak_planks", () -> new UnstablePlanksBlock(AbstractBlock.Settings.copy(Blocks.DARK_OAK_PLANKS)));
+    public static final RegistrySupplier<Block> UNSTABLE_PALM_PLANKS = BLOCKS.register("unstable_palm_planks", () -> new UnstablePlanksBlock(AbstractBlock.Settings.copy(PALM_PLANKS.get())));
+    public static final RegistrySupplier<Block> UNSTABLE_BAOBAB_PLANKS = BLOCKS.register("unstable_baobab_planks", () -> new UnstablePlanksBlock(AbstractBlock.Settings.copy(BAOBAB_PLANKS.get())));
+
+    public static final RegistrySupplier<Block> INFESTED_OAK_PLANKS = BLOCKS.register("infested_oak_planks", () -> new InfestedPlanksBlock(Blocks.OAK_PLANKS, UNSTABLE_OAK_PLANKS.get(), AbstractBlock.Settings.copy(Blocks.OAK_PLANKS)));
+    public static final RegistrySupplier<Block> INFESTED_SPRUCE_PLANKS = BLOCKS.register("infested_spruce_planks", () -> new InfestedPlanksBlock(Blocks.SPRUCE_PLANKS, UNSTABLE_SPRUCE_PLANKS.get(), AbstractBlock.Settings.copy(Blocks.SPRUCE_PLANKS)));
+    public static final RegistrySupplier<Block> INFESTED_BIRCH_PLANKS = BLOCKS.register("infested_birch_planks", () -> new InfestedPlanksBlock(Blocks.BIRCH_PLANKS, UNSTABLE_BIRCH_PLANKS.get(), AbstractBlock.Settings.copy(Blocks.BIRCH_PLANKS)));
+    public static final RegistrySupplier<Block> INFESTED_JUNGLE_PLANKS = BLOCKS.register("infested_jungle_planks", () -> new InfestedPlanksBlock(Blocks.JUNGLE_PLANKS, UNSTABLE_JUNGLE_PLANKS.get(), AbstractBlock.Settings.copy(Blocks.JUNGLE_PLANKS)));
+    public static final RegistrySupplier<Block> INFESTED_ACACIA_PLANKS = BLOCKS.register("infested_acacia_planks", () -> new InfestedPlanksBlock(Blocks.ACACIA_PLANKS, UNSTABLE_ACACIA_PLANKS.get(), AbstractBlock.Settings.copy(Blocks.ACACIA_PLANKS)));
+    public static final RegistrySupplier<Block> INFESTED_DARK_OAK_PLANKS = BLOCKS.register("infested_dark_oak_planks", () -> new InfestedPlanksBlock(Blocks.DARK_OAK_PLANKS, UNSTABLE_DARK_OAK_PLANKS.get(), AbstractBlock.Settings.copy(Blocks.DARK_OAK_PLANKS)));
+    public static final RegistrySupplier<Block> INFESTED_PALM_PLANKS = BLOCKS.register("infested_palm_planks", () -> new InfestedPlanksBlock(PALM_PLANKS.get(), UNSTABLE_PALM_PLANKS.get(), AbstractBlock.Settings.copy(PALM_PLANKS.get())));
+    public static final RegistrySupplier<Block> INFESTED_BAOBAB_PLANKS = BLOCKS.register("infested_baobab_planks", () -> new InfestedPlanksBlock(BAOBAB_PLANKS.get(), UNSTABLE_BAOBAB_PLANKS.get(), AbstractBlock.Settings.copy(BAOBAB_PLANKS.get())));
+    
     // Block items
     public static final RegistrySupplier<Item> BURROW_ITEM = BLOCK_ITEMS.register("burrow", () -> new ModBlockItem(BURROW.get(), new Item.Settings()));
 
@@ -133,6 +151,24 @@ public class ModBlocks {
     public static final RegistrySupplier<Item> INFESTED_PALM_LOG_ITEM = BLOCK_ITEMS.register("infested_palm_log", () -> new ModBlockItem(INFESTED_PALM_LOG.get(), new Item.Settings()));
     public static final RegistrySupplier<Item> INFESTED_BAOBAB_LOG_ITEM = BLOCK_ITEMS.register("infested_baobab_log", () -> new ModBlockItem(INFESTED_BAOBAB_LOG.get(), new Item.Settings()));
 
+    public static final RegistrySupplier<Item> UNSTABLE_OAK_PLANKS_ITEM = BLOCK_ITEMS.register("unstable_oak_planks", () -> new ModBlockItem(UNSTABLE_OAK_PLANKS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> UNSTABLE_SPRUCE_PLANKS_ITEM = BLOCK_ITEMS.register("unstable_spruce_planks", () -> new ModBlockItem(UNSTABLE_SPRUCE_PLANKS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> UNSTABLE_BIRCH_PLANKS_ITEM = BLOCK_ITEMS.register("unstable_birch_planks", () -> new ModBlockItem(UNSTABLE_BIRCH_PLANKS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> UNSTABLE_JUNGLE_PLANKS_ITEM = BLOCK_ITEMS.register("unstable_jungle_planks", () -> new ModBlockItem(UNSTABLE_JUNGLE_PLANKS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> UNSTABLE_ACACIA_PLANKS_ITEM = BLOCK_ITEMS.register("unstable_acacia_planks", () -> new ModBlockItem(UNSTABLE_ACACIA_PLANKS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> UNSTABLE_DARK_OAK_PLANKS_ITEM = BLOCK_ITEMS.register("unstable_dark_oak_planks", () -> new ModBlockItem(UNSTABLE_DARK_OAK_PLANKS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> UNSTABLE_PALM_PLANKS_ITEM = BLOCK_ITEMS.register("unstable_palm_planks", () -> new ModBlockItem(UNSTABLE_PALM_PLANKS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> UNSTABLE_BAOBAB_PLANKS_ITEM = BLOCK_ITEMS.register("unstable_baobab_planks", () -> new ModBlockItem(UNSTABLE_BAOBAB_PLANKS.get(), new Item.Settings()));
+
+    public static final RegistrySupplier<Item> INFESTED_OAK_PLANKS_ITEM = BLOCK_ITEMS.register("infested_oak_planks", () -> new ModBlockItem(INFESTED_OAK_PLANKS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> INFESTED_SPRUCE_PLANKS_ITEM = BLOCK_ITEMS.register("infested_spruce_planks", () -> new ModBlockItem(INFESTED_SPRUCE_PLANKS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> INFESTED_BIRCH_PLANKS_ITEM = BLOCK_ITEMS.register("infested_birch_planks", () -> new ModBlockItem(INFESTED_BIRCH_PLANKS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> INFESTED_JUNGLE_PLANKS_ITEM = BLOCK_ITEMS.register("infested_jungle_planks", () -> new ModBlockItem(INFESTED_JUNGLE_PLANKS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> INFESTED_ACACIA_PLANKS_ITEM = BLOCK_ITEMS.register("infested_acacia_planks", () -> new ModBlockItem(INFESTED_ACACIA_PLANKS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> INFESTED_DARK_OAK_PLANKS_ITEM = BLOCK_ITEMS.register("infested_dark_oak_planks", () -> new ModBlockItem(INFESTED_DARK_OAK_PLANKS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> INFESTED_PALM_PLANKS_ITEM = BLOCK_ITEMS.register("infested_palm_planks", () -> new ModBlockItem(INFESTED_PALM_PLANKS.get(), new Item.Settings()));
+    public static final RegistrySupplier<Item> INFESTED_BAOBAB_PLANKS_ITEM = BLOCK_ITEMS.register("infested_baobab_planks", () -> new ModBlockItem(INFESTED_BAOBAB_PLANKS.get(), new Item.Settings()));
+    
     private static PillarBlock createLogBlock(MapColor topColor, MapColor barkColor) {
         return new PillarBlock(AbstractBlock.Settings.of(Material.WOOD, (state) -> {
             return state.get(PillarBlock.AXIS) == Direction.Axis.Y ? topColor : barkColor;
